@@ -1,7 +1,13 @@
+import Content from "./components/Content";
+import Header from "./components/Header";
+import Sidebar from "./components/Sidebar";
+
 function App() {
   return (
     <div className="App">
-      <header className="App-header">movie app</header>
+      <Header />
+      <Content />
+      <Sidebar />
     </div>
   );
 }
