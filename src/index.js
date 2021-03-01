@@ -1,12 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import { CssBaseline } from "@material-ui/core";
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import { AppProvider } from "./utils/context";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <AppProvider>
+      <CssBaseline />
+      <App />
+    </AppProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
-
-
