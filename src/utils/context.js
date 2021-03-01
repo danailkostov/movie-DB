@@ -7,7 +7,7 @@ const searchUrl =
 const AppProvider = ({ children }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchPage, setSearchPage] = useState(1);
-  const [searchItems, setSearchItems] = useState([]);
+  const [searchItems, setSearchItems] = useState(null);
 
   const fetchSearch = async () => {
     const query = searchQuery;

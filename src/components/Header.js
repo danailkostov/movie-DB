@@ -40,7 +40,7 @@ const Header = () => {
   };
 
   return (
-    <AppBar>
+    <AppBar position="static">
       <Toolbar
         style={{ display: "flex", justifyContent: "space-between" }}
         component="nav"
