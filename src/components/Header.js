@@ -1,11 +1,11 @@
 import {
   AppBar,
-  Box,
   Button,
   IconButton,
   Toolbar,
   Paper,
   InputBase,
+  Container,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -19,13 +19,17 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     width: 400,
+    backgroundColor: "black",
+    border: '1px solid white'
   },
   input: {
     marginLeft: theme.spacing(1),
     flex: 1,
+    color: 'white'
   },
   iconButton: {
     padding: 10,
+    color: 'white',
   },
 }));
 
@@ -40,50 +44,43 @@ const Header = () => {
   };
 
   return (
-    <AppBar position="static">
-      <Toolbar
-        style={{ display: "flex", justifyContent: "space-between" }}
-        component="nav"
-      >
-        <Paper
-          component="form"
-          className={classes.root}
-          onSubmit={handleSubmit}
+    <AppBar position="static" style={{ backgroundColor: "black", padding: '10px' }}>
+      <Container>
+        <Toolbar
+          style={{ display: "flex", justifyContent: "space-between" }}
+          component="nav"
         >
-          <IconButton className={classes.iconButton} aria-label="menu">
-            <MenuIcon />
-          </IconButton>
-          <InputBase
-            className={classes.input}
-            placeholder="Search for movie, tv or person"
-            inputProps={{ "aria-label": "search for movie, tv or person" }}
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            // this is if i want to make API request on every change not just on submit
-            // value={searchQuery}
-            // onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <IconButton
-            type="submit"
-            className={classes.iconButton}
-            aria-label="search"
+          <Paper
+            component="form"
+            className={classes.root}
+            onSubmit={handleSubmit}
           >
-            <SearchIcon />
-          </IconButton>
-        </Paper>
-        <Box>
-          <Button
-            color="secondary"
-            variant="contained"
-            style={{ marginRight: "20px" }}
-          >
-            Login
+            <IconButton className={classes.iconButton} aria-label="menu">
+              <MenuIcon />
+            </IconButton>
+            <InputBase
+              className={classes.input}
+              placeholder="Search for movie, tv or person"
+              inputProps={{ "aria-label": "search for movie, tv or person" }}
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              // this is if i want to make API request on every change not just on submit
+              // value={searchQuery}
+              // onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <IconButton
+              type="submit"
+              className={classes.iconButton}
+              aria-label="search"
+            >
+              <SearchIcon />
+            </IconButton>
+          </Paper>
+          <Button color="inherit" variant="outlined">
+            Sign in
           </Button>
-          <Button color="secondary" variant="contained">
-            Sign Up
-          </Button>
-        </Box>
-      </Toolbar>
+        </Toolbar>
+      </Container>
     </AppBar>
   );
 };

@@ -1,9 +1,9 @@
 import {
   Typography,
   Card,
-  CardActionArea,
   CardMedia,
   CardContent,
+  Link,
 } from "@material-ui/core";
 import React from "react";
 import noPosterImg from "../images/no-cover.png";
@@ -13,6 +13,8 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
+    boxShadow: "none",
+    backgroundColor: "transparent",
   },
   media: {
     height: 400,
@@ -35,7 +37,10 @@ const SingleItem = ({
 
   return (
     <Card className={classes.root}>
-      <CardActionArea>
+      <Link
+        href="#"
+        target="_blank"
+      >
         <CardMedia
           className={classes.media}
           image={
@@ -47,19 +52,19 @@ const SingleItem = ({
           }
           title="Contemplative Reptile"
         />
-        <CardContent>
-          <Typography gutterBottom variant="subtitle2" component="h2">
-            {title ? title.toUpperCase() : name.toUpperCase()}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {releaseYear
-              ? releaseYear
-              : firstAirDate
-              ? firstAirDate
-              : known_for_department}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
+      </Link>
+      <CardContent>
+        <Typography gutterBottom variant="subtitle2" component="h2">
+          {title ? title.toUpperCase() : name.toUpperCase()}
+        </Typography>
+        <Typography variant="body2" color="textSecondary" component="p">
+          {releaseYear
+            ? releaseYear
+            : firstAirDate
+            ? firstAirDate
+            : known_for_department}
+        </Typography>
+      </CardContent>
     </Card>
   );
 };

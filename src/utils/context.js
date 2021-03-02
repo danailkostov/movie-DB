@@ -1,29 +1,47 @@
 import React, { useContext, useEffect, useState } from "react";
+import { fetchSearch, fetchPopular } from "../services/services";
 
 const AppContext = React.createContext();
-const searchUrl =
-  "https://api.themoviedb.org/3/search/multi?api_key=626eebde47750fb57144ba7fcfb85a26&language=en-US&query=";
+
+const posterUrl = "https://image.tmdb.org/t/p/w342";
+const backdropUrl = "https://image.tmdb.org/t/p/w780";
 
 const AppProvider = ({ children }) => {
+  //date maximum 2021-02-27  minimum - 2021-01-10
   const [searchQuery, setSearchQuery] = useState("");
   const [searchPage, setSearchPage] = useState(1);
   const [searchItems, setSearchItems] = useState(null);
-
-  const fetchSearch = async () => {
-    const query = searchQuery;
-    const page = `&page=${searchPage}`;
-    const response = await fetch(`${searchUrl}${query}${page}`);
-    const searchListArray = await response.json();
-    console.log(searchListArray.results);
-    setSearchItems(searchListArray.results);
-  };
+  const [nowItems, setNowItems] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchSearch();
+    const fetchAPI = async () => {
+      setIsLoading(true);
+      setNowItems(await fetchPopular());
+      setIsLoading(false);
+    };
+    fetchAPI();
+  }, []);
+
+  useEffect(() => {
+    const fetchAPI = async () => {
+      setSearchItems(await fetchSearch(searchQuery, searchPage));
+    };
+    fetchAPI();
   }, [searchQuery]);
 
   return (
-    <AppContext.Provider value={{ setSearchQuery, searchQuery, searchItems }}>
+    <AppContext.Provider
+      value={{
+        setSearchQuery,
+        searchQuery,
+        searchItems,
+        nowItems,
+        isLoading,
+        posterUrl,
+        backdropUrl,
+      }}
+    >
       {children}
     </AppContext.Provider>
   );
