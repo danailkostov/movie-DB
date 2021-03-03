@@ -1,5 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { fetchSearch, fetchPopular } from "../services/services";
+import {
+  fetchSearch,
+  fetchPopular,
+  fetchGenres,
+  fetchPopularTV,
+  fetchGenresTV,
+} from "../services/services";
 
 const AppContext = React.createContext();
 
@@ -13,11 +19,19 @@ const AppProvider = ({ children }) => {
   const [searchItems, setSearchItems] = useState(null);
   const [nowItems, setNowItems] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [genres, setGenres] = useState(null);
+  const [tvs, setTvs] = useState(null);
+  const [isMovies, setIsMovies] = useState(true);
+  const [tvGenres, setTvGenres] = useState(null);
+  console.log(tvGenres);
 
   useEffect(() => {
     const fetchAPI = async () => {
       setIsLoading(true);
       setNowItems(await fetchPopular());
+      setGenres(await fetchGenres());
+      setTvs(await fetchPopularTV());
+      setTvGenres(await fetchGenresTV());
       setIsLoading(false);
     };
     fetchAPI();
@@ -40,6 +54,11 @@ const AppProvider = ({ children }) => {
         isLoading,
         posterUrl,
         backdropUrl,
+        genres,
+        tvs,
+        isMovies,
+        setIsMovies,
+        tvGenres,
       }}
     >
       {children}

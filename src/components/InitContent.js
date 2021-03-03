@@ -4,7 +4,7 @@ import NowPlaying from "./NowPlaying";
 
 const InitContent = () => {
   return (
-    <Container style={{ marginTop: "50px" }} maxWidth="md" component="section">
+    <Container style={{ marginTop: "50px" }} maxWidth="lg" component="section">
       <NowPlaying />
     </Container>
   );
