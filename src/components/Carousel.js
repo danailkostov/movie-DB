@@ -3,15 +3,24 @@ import { useGlobalContext } from "../utils/context";
 import Slider from "react-slick";
 import { fetchVideo, fetchVideoTV } from "../services/services";
 import ReactPlayer from "react-player";
-import { Typography, CircularProgress, Button } from "@material-ui/core";
+import {
+  Typography,
+  CircularProgress,
+  Button,
+  Box,
+  Link,
+} from "@material-ui/core";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   image: {
     width: "20rem",
     margin: "0 auto",
+    [theme.breakpoints.between("xs", "md")]: {
+      height: "400px",
+    },
   },
   slide: {
     transform: "scale(0.7)",
@@ -43,12 +52,23 @@ const useStyles = makeStyles({
     top: "50%",
   },
   desc: {
-    marginTop: "45px",
+    margin: "35px auto",
+    maxWidth: "500px",
   },
   btn: {
     margin: "10px",
   },
-});
+  player: {
+    marginTop: "55px",
+    height: "600px",
+    [theme.breakpoints.between("xs", "md")]: {
+      height: "400px",
+    },
+  },
+  title: {
+    marginTop: "35px",
+  },
+}));
 
 const Carousel = () => {
   const classes = useStyles();
@@ -69,6 +89,8 @@ const Carousel = () => {
   const [imageIndex, setImageIndex] = useState(0);
   const [desc, setDesc] = useState(currentItems[0].overview);
   const [genresArray, setGenresArray] = useState(currentItems[0].genre_ids);
+  const [movieTitle, setMovieTitle] = useState(nowItems[0].title);
+  const [tvTitle, setTvTitle] = useState(tvs[0].original_name);
 
   useEffect(() => {
     const fetchAPI = async () => {
@@ -108,6 +130,8 @@ const Carousel = () => {
       setCurrentId(currentItems[current].id);
       setDesc(currentItems[current].overview);
       setGenresArray(currentItems[current].genre_ids);
+      setMovieTitle(nowItems[current].title);
+      setTvTitle(tvs[current].original_name);
     },
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
@@ -173,7 +197,16 @@ const Carousel = () => {
           );
         })}
       </Slider>
-      <Typography align="center">Title of the Movie</Typography>
+      <Typography
+        align="center"
+        className={classes.title}
+        variant="h4"
+        component="h1"
+      >
+        <Link href="#" color="inherit">
+          {isMovies ? movieTitle : tvTitle}
+        </Link>
+      </Typography>
       <Typography
         align="center"
         className={classes.desc}
@@ -205,13 +238,9 @@ const Carousel = () => {
           <CircularProgress size={160} />
         </Typography>
       ) : (
-        <ReactPlayer
-          url={video}
-          width="100%"
-          height="500px"
-          controls
-          style={{ marginTop: "55px" }}
-        />
+        <Box className={classes.player}>
+          <ReactPlayer url={video} width="100%" height="100%" controls />
+        </Box>
       )}
     </>
   );
