@@ -8,6 +8,8 @@ const genresUrl = `${mainUrl}/genre/movie/list?${apiKey}&language=en-US`;
 const tvUrl = `${mainUrl}/tv/popular?${apiKey}&language=en-US&page=1`;
 const tvVideosUrl = `${mainUrl}/tv/`;
 const tvGenresUrl = `${mainUrl}/genre/tv/list?${apiKey}&language=en-US`;
+const trendingDayUrl = `${mainUrl}/trending/all/day?${apiKey}&page=1`;
+const trendingWeekUrl = `${mainUrl}/trending/all/week?${apiKey}&page=1`;
 
 const fetchSearch = async (searchQuery, searchPage) => {
   const query = searchQuery;
@@ -67,6 +69,21 @@ const fetchGenresTV = async () => {
   return genresList.genres;
 };
 
+const fetchTrendingDay = async () => {
+  const response = await fetch(trendingDayUrl);
+  const dayList = await response.json();
+  return dayList.results
+    .sort((a, b) => (a.vote_average < b.vote_average ? 1 : -1))
+    .slice(0, 6);
+};
+const fetchTrendingWeek = async () => {
+  const response = await fetch(trendingWeekUrl);
+  const dayList = await response.json();
+  return dayList.results
+    .sort((a, b) => (a.vote_average < b.vote_average ? 1 : -1))
+    .slice(0, 6);
+};
+
 export {
   fetchSearch,
   fetchPopular,
@@ -75,4 +92,6 @@ export {
   fetchPopularTV,
   fetchVideoTV,
   fetchGenresTV,
+  fetchTrendingDay,
+  fetchTrendingWeek
 };

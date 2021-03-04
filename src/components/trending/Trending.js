@@ -1,55 +1,19 @@
 import React from "react";
-import { Grid, Typography } from "@material-ui/core";
 import Toggle from "./Toggle";
+import { useGlobalContext } from "../../utils/context";
+import TrendingList from "./TrendingList";
 
 const Trending = () => {
+  const { trendingDayList, trendingWeekList, isDay } = useGlobalContext();
+  const posterUrl = "https://image.tmdb.org/t/p/w342";
+
   return (
     <>
       <Toggle />
-      <Grid container spacing={2}>
-        <Grid item xs={2}>
-          <Typography
-            style={{ backgroundColor: "white", width: "100%", height: "300px" }}
-          >
-            Test
-          </Typography>
-        </Grid>
-        <Grid item xs={2}>
-          <Typography
-            style={{ backgroundColor: "white", width: "100%", height: "300px" }}
-          >
-            Test
-          </Typography>
-        </Grid>
-        <Grid item xs={2}>
-          <Typography
-            style={{ backgroundColor: "white", width: "100%", height: "300px" }}
-          >
-            Test
-          </Typography>
-        </Grid>
-        <Grid item xs={2}>
-          <Typography
-            style={{ backgroundColor: "white", width: "100%", height: "300px" }}
-          >
-            Test
-          </Typography>
-        </Grid>
-        <Grid item xs={2}>
-          <Typography
-            style={{ backgroundColor: "white", width: "100%", height: "300px" }}
-          >
-            Test
-          </Typography>
-        </Grid>
-        <Grid item xs={2}>
-          <Typography
-            style={{ backgroundColor: "white", width: "100%", height: "300px" }}
-          >
-            Test
-          </Typography>
-        </Grid>
-      </Grid>
+      <TrendingList
+        movies={isDay ? trendingDayList : trendingWeekList}
+        imageUrl={posterUrl}
+      />
     </>
   );
 };
