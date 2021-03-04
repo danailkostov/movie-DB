@@ -1,13 +1,12 @@
 import {
-  Grid,
   Container,
   CircularProgress,
   Typography,
 } from "@material-ui/core";
 import React from "react";
 import { useGlobalContext } from "../utils/context";
-import SingleItem from "./SingleItem";
-import InitContent from "./InitContent";
+import InitContent from "./initContent/InitContent";
+import SearchContent from "./search/SearchContent";
 
 const Content = () => {
   const { searchItems, isLoading } = useGlobalContext();
@@ -27,15 +26,7 @@ const Content = () => {
 
   return (
     <Container component="main" style={{ marginTop: "50px" }}>
-      <Grid container component="section" spacing={4}>
-        {searchItems.map((item) => {
-          return (
-            <Grid item xs={3} component="article">
-              <SingleItem {...item} />
-            </Grid>
-          );
-        })}
-      </Grid>
+      <SearchContent />
     </Container>
   );
 };

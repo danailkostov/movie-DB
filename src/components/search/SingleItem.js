@@ -6,7 +6,7 @@ import {
   Link,
 } from "@material-ui/core";
 import React from "react";
-import noPosterImg from "../images/no-cover.png";
+import noPosterImg from "../../images/no-cover.png";
 import moment from "moment";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -37,10 +37,7 @@ const SingleItem = ({
 
   return (
     <Card className={classes.root}>
-      <Link
-        href="#"
-        target="_blank"
-      >
+      <Link href="#" target="_blank">
         <CardMedia
           className={classes.media}
           image={

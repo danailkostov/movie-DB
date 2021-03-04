@@ -13,7 +13,6 @@ const NowPlaying = () => {
         paragraph
         style={{
           fontWeight: "500",
-          borderBottom: "1px solid black",
           paddingBottom: "10px",
         }}
       >

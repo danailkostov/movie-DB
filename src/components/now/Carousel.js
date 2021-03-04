@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useGlobalContext } from "../utils/context";
+import { useGlobalContext } from "../../utils/context";
 import Slider from "react-slick";
-import { fetchVideo, fetchVideoTV } from "../services/services";
+import { fetchVideo, fetchVideoTV } from "../../services/services";
 import ReactPlayer from "react-player";
 import {
   Typography,
