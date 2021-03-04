@@ -135,9 +135,9 @@ const Carousel = () => {
         <Button
           color="inherit"
           onClick={() => {
-            setCurrentId(tvs[0].id);
-            setDesc(tvs[0].overview);
-            setGenresArray(tvs[0].genre_ids);
+            setCurrentId(tvs[imageIndex].id);
+            setDesc(tvs[imageIndex].overview);
+            setGenresArray(tvs[imageIndex].genre_ids);
             setIsMovies(false);
           }}
         >
@@ -146,9 +146,9 @@ const Carousel = () => {
         <Button
           color="inherit"
           onClick={() => {
-            setCurrentId(nowItems[0].id);
-            setDesc(nowItems[0].overview);
-            setGenresArray(nowItems[0].genre_ids);
+            setCurrentId(nowItems[imageIndex].id);
+            setDesc(nowItems[imageIndex].overview);
+            setGenresArray(nowItems[imageIndex].genre_ids);
             setIsMovies(true);
           }}
         >
@@ -173,6 +173,7 @@ const Carousel = () => {
           );
         })}
       </Slider>
+      <Typography align="center">Title of the Movie</Typography>
       <Typography
         align="center"
         className={classes.desc}
