@@ -16,7 +16,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   image: {
-    width: "20rem",
+    width: "100%",
     margin: "0 auto",
     [theme.breakpoints.between("xs", "md")]: {
       height: "400px",
@@ -145,7 +145,7 @@ const Carousel = () => {
         },
       },
       {
-        breakpoint: 900,
+        breakpoint: 600,
         settings: {
           slidesToShow: 1,
         },

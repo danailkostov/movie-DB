@@ -3,8 +3,28 @@ import { Box, Typography } from "@material-ui/core";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import { useGlobalContext } from "../../utils/context";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  box: {
+    display: "flex",
+    justifyContent: "space-around",
+    margin: "35px auto",
+    [theme.breakpoints.only("xs")]: {
+      display: "grid",
+    },
+  },
+  btnGrp: {
+    border: "1px solid white",
+    zIndex: "1",
+    [theme.breakpoints.only("xs")]: {
+      marginTop: "5px",
+    },
+  },
+}));
 
 const Toggle = () => {
+  const classes = useStyles();
   const { setIsDay, isDay } = useGlobalContext();
   const [alignment, setAlignment] = React.useState("left");
 
@@ -13,13 +33,7 @@ const Toggle = () => {
     setIsDay(!isDay);
   };
   return (
-    <Box
-      style={{
-        display: "flex",
-        justifyContent: "space-around",
-        margin: "35px auto",
-      }}
-    >
+    <Box className={classes.box}>
       <Typography
         variant="h4"
         component="h1"
@@ -35,7 +49,7 @@ const Toggle = () => {
         exclusive
         onChange={handleAlignment}
         aria-label="text alignment"
-        style={{ border: "1px solid white" }}
+        className={classes.btnGrp}
       >
         <ToggleButton
           value="left"

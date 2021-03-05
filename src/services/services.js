@@ -72,16 +72,16 @@ const fetchGenresTV = async () => {
 const fetchTrendingDay = async () => {
   const response = await fetch(trendingDayUrl);
   const dayList = await response.json();
-  return dayList.results
-    .sort((a, b) => (a.vote_average < b.vote_average ? 1 : -1))
-    .slice(0, 6);
+  return dayList.results.sort((a, b) =>
+    a.vote_average < b.vote_average ? 1 : -1
+  );
 };
 const fetchTrendingWeek = async () => {
   const response = await fetch(trendingWeekUrl);
   const dayList = await response.json();
-  return dayList.results
-    .sort((a, b) => (a.vote_average < b.vote_average ? 1 : -1))
-    .slice(0, 6);
+  return dayList.results.sort((a, b) =>
+    a.vote_average < b.vote_average ? 1 : -1
+  );
 };
 
 export {
@@ -93,5 +93,5 @@ export {
   fetchVideoTV,
   fetchGenresTV,
   fetchTrendingDay,
-  fetchTrendingWeek
+  fetchTrendingWeek,
 };
