@@ -13,6 +13,7 @@ import {
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import { makeStyles } from "@material-ui/core/styles";
+import noImage from "../../images/no-cover.png";
 
 const useStyles = makeStyles((theme) => ({
   image: {
@@ -189,7 +190,7 @@ const Carousel = () => {
               }
             >
               <img
-                src={`${posterUrl}${poster_path}`}
+                src={poster_path ? `${posterUrl}${poster_path}` : noImage}
                 alt={title}
                 className={classes.image}
               />
