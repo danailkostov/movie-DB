@@ -12,6 +12,7 @@ const trendingDayUrl = `${mainUrl}/trending/all/day?${apiKey}&page=1`;
 const trendingWeekUrl = `${mainUrl}/trending/all/week?${apiKey}&page=1`;
 const topRatedMoviesUrl = `${mainUrl}/movie/top_rated?${apiKey}&language=en-US&page=1`;
 const topRatedTVsUrl = `${mainUrl}/tv/top_rated?${apiKey}&language=en-US&page=1`;
+const upcomingUrl = `${mainUrl}/movie/upcoming?${apiKey}&language=en-US&page=1`;
 
 const fetchSearch = async (searchQuery, searchPage) => {
   const query = searchQuery;
@@ -101,6 +102,12 @@ const fetchTopRatedTVs = async () => {
   );
 };
 
+const fetchUpcoming = async () => {
+  const response = await fetch(upcomingUrl);
+  const upcomingList = await response.json();
+  return upcomingList.results.sort((a, b) => (a.popularity < b.popularity ? 1 : -1));
+};
+
 export {
   fetchSearch,
   fetchPopular,
@@ -113,4 +120,5 @@ export {
   fetchTrendingWeek,
   fetchTopRatedMovies,
   fetchTopRatedTVs,
+  fetchUpcoming,
 };
