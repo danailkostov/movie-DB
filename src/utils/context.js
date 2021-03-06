@@ -7,6 +7,8 @@ import {
   fetchGenresTV,
   fetchTrendingDay,
   fetchTrendingWeek,
+  fetchTopRatedMovies,
+  fetchTopRatedTVs,
 } from "../services/services";
 
 const AppContext = React.createContext();
@@ -27,7 +29,10 @@ const AppProvider = ({ children }) => {
   const [tvGenres, setTvGenres] = useState(null);
   const [trendingDayList, setTrendingDayList] = useState(null);
   const [trendingWeekList, setTrendingWeekList] = useState(null);
+  const [topRatedMovies, setTopRatedMovies] = useState(null);
+  const [topRatedTVs, setTopRatedTVs] = useState(null);
   const [isDay, setIsDay] = useState(true);
+  const [isTV, setIsTV] = useState(false);
   console.log(tvGenres);
 
   useEffect(() => {
@@ -39,6 +44,8 @@ const AppProvider = ({ children }) => {
       setTvGenres(await fetchGenresTV());
       setTrendingDayList(await fetchTrendingDay());
       setTrendingWeekList(await fetchTrendingWeek());
+      setTopRatedMovies(await fetchTopRatedMovies());
+      setTopRatedTVs(await fetchTopRatedTVs());
       setIsLoading(false);
     };
     fetchAPI();
@@ -70,6 +77,10 @@ const AppProvider = ({ children }) => {
         trendingWeekList,
         isDay,
         setIsDay,
+        isTV,
+        setIsTV,
+        topRatedMovies,
+        topRatedTVs,
       }}
     >
       {children}

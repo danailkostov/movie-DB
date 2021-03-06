@@ -23,14 +23,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Toggle = () => {
+const Toggle = ({ text, prev, next }) => {
   const classes = useStyles();
-  const { setIsDay, isDay } = useGlobalContext();
+  const { setIsDay, isDay, isTV, setIsTV } = useGlobalContext();
   const [alignment, setAlignment] = React.useState("left");
 
   const handleAlignment = (event, newAlignment) => {
     setAlignment(newAlignment);
-    setIsDay(!isDay);
+    if (text === "Trending") {
+      setIsDay(!isDay);
+    } else {
+      setIsTV(!isTV);
+    }
+    // setIsDay(!isDay);
   };
   return (
     <Box className={classes.box}>
@@ -42,7 +47,7 @@ const Toggle = () => {
           fontWeight: "500",
         }}
       >
-        Trending
+        {text}
       </Typography>
       <ToggleButtonGroup
         value={alignment}
@@ -56,14 +61,14 @@ const Toggle = () => {
           aria-label="left aligned"
           style={{ color: "white" }}
         >
-          Today
+          {prev}
         </ToggleButton>
         <ToggleButton
           value="center"
           aria-label="centered"
           style={{ color: "white" }}
         >
-          This Week
+          {next}
         </ToggleButton>
       </ToggleButtonGroup>
     </Box>
