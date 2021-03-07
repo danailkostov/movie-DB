@@ -13,5 +13,5 @@ function App() {
 export default App;
 
 //how to hide my API key
-//auto sugges earch
 //research about folder structures
+//auto sugges earch
