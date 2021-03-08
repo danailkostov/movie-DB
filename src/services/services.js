@@ -1,4 +1,5 @@
-const apiKey = `api_key=${process.env.REACT_APP_API_KEY}`;
+// const apiKey = `api_key=${process.env.REACT_APP_API_KEY}`;
+const apiKey = "api_key=626eebde47750fb57144ba7fcfb85a26";
 const mainUrl = "https://api.themoviedb.org/3";
 const searchUrl = `${mainUrl}/search/multi?${apiKey}&language=en-US&query=`;
 const playingNowUrl = `${mainUrl}/movie/now_playing?${apiKey}&language=en-US&page=1`;
@@ -105,7 +106,9 @@ const fetchTopRatedTVs = async () => {
 const fetchUpcoming = async () => {
   const response = await fetch(upcomingUrl);
   const upcomingList = await response.json();
-  return upcomingList.results.sort((a, b) => (a.popularity < b.popularity ? 1 : -1));
+  return upcomingList.results.sort((a, b) =>
+    a.popularity < b.popularity ? 1 : -1
+  );
 };
 
 export {

@@ -53,6 +53,7 @@ const Autosuggest = ({ value, setValue }) => {
               placeholder="Search for movie, tv or person"
               value={value}
               onChange={optimisedVersion}
+              // old version - onChange={(e) => handleChange(e)} - without debounce
             />
           );
         }}
