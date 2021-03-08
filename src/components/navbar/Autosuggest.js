@@ -1,10 +1,22 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Typography, Link, TextField } from "@material-ui/core";
 import { fetchSearch } from "../../services/services";
 
-const Autosuggest = ({value, setValue}) => {
+const Autosuggest = ({ value, setValue }) => {
   const [searchItems, setSearchItems] = useState([]);
+
+  const debounce = (func) => {
+    let timer;
+    return function (...args) {
+      const context = this;
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        timer = null;
+        func.apply(context, args);
+      }, 500);
+    };
+  };
 
   const handleChange = async (event) => {
     if (event.target.value.length > 0) {
@@ -14,6 +26,9 @@ const Autosuggest = ({value, setValue}) => {
     }
     setValue(event.target.value);
   };
+
+  //useCallback provides us the memorized callback
+  const optimisedVersion = useCallback(debounce(handleChange), []);
 
   return (
     <>
@@ -37,7 +52,7 @@ const Autosuggest = ({value, setValue}) => {
               fullWidth
               placeholder="Search for movie, tv or person"
               value={value}
-              onChange={(e) => handleChange(e)}
+              onChange={optimisedVersion}
             />
           );
         }}
