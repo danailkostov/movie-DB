@@ -1,4 +1,4 @@
-const apiKey = "api_key=626eebde47750fb57144ba7fcfb85a26";
+const apiKey = `api_key=${process.env.REACT_APP_API_KEY}`;
 const mainUrl = "https://api.themoviedb.org/3";
 const searchUrl = `${mainUrl}/search/multi?${apiKey}&language=en-US&query=`;
 const playingNowUrl = `${mainUrl}/movie/now_playing?${apiKey}&language=en-US&page=1`;
