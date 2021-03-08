@@ -1,4 +1,4 @@
-import { Typography } from "@material-ui/core";
+import { Link, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { useGlobalContext } from "../../utils/context";
@@ -128,13 +128,16 @@ const Upcoming = () => {
         {test.map((video) => {
           return (
             <div className={classes.slide}>
-              <ReactPlayer
-                url={video}
-                width="80%"
-                height="100%"
-                controls
-                style={{ margin: "0 auto" }}
-              />
+              <Link href={video} target='_blank'>
+                <ReactPlayer
+                  light={true}
+                  url={video}
+                  width="80%"
+                  height="100%"
+                  controls
+                  style={{ margin: "0 auto" }}
+                />
+              </Link>
             </div>
           );
         })}
