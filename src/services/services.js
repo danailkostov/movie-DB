@@ -111,6 +111,25 @@ const fetchUpcoming = async () => {
   );
 };
 
+const fetchMovieDetails = async (id) => {
+  const singleMovieUrl = `${mainUrl}/movie/${id}?${apiKey}&language=en-US`;
+  const response = await fetch(singleMovieUrl);
+  const movieDetails = await response.json();
+  return movieDetails;
+};
+const fetchMovieCrew = async (id) => {
+  const singleMovieUrl = `${mainUrl}/movie/${id}/credits?${apiKey}&language=en-US`;
+  const response = await fetch(singleMovieUrl);
+  const movieCredits = await response.json();
+  return movieCredits.crew;
+};
+const fetchMovieCast = async (id) => {
+  const singleMovieUrl = `${mainUrl}/movie/${id}/credits?${apiKey}&language=en-US`;
+  const response = await fetch(singleMovieUrl);
+  const movieCredits = await response.json();
+  return movieCredits.cast;
+};
+
 export {
   fetchSearch,
   fetchPopular,
@@ -124,4 +143,7 @@ export {
   fetchTopRatedMovies,
   fetchTopRatedTVs,
   fetchUpcoming,
+  fetchMovieDetails,
+  fetchMovieCrew,
+  fetchMovieCast
 };

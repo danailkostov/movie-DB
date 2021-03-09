@@ -8,12 +8,13 @@ import {
   CircularProgress,
   Button,
   Box,
-  Link,
+  // Link,
 } from "@material-ui/core";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import { makeStyles } from "@material-ui/core/styles";
 import noImage from "../../images/no-cover.png";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   image: {
@@ -204,7 +205,7 @@ const Carousel = () => {
         variant="h4"
         component="h1"
       >
-        <Link href="#" color="inherit">
+        <Link to={"/movie/" + currentId} color="inherit">
           {isMovies ? movieTitle : tvTitle}
         </Link>
       </Typography>

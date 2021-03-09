@@ -1,14 +1,23 @@
-import Content from "./components/Content";
-import Header from "./components/Header";
-console.log(process.env.REACT_APP_API_KEY);
-
+import Header from "./components/header/Header";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Home from "./components/home/Home";
+import SingleMovie from "./components/SingleMovie";
 
 function App() {
   return (
-    <div className="App" style={{ backgroundColor: "black", color: "white" }}>
-      <Header />
-      <Content />
-    </div>
+    <Router>
+      <div className="App" style={{ backgroundColor: "black", color: "white" }}>
+        <Header />
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/movie/:id">
+            <SingleMovie />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 

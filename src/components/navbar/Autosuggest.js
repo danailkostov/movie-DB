@@ -1,10 +1,11 @@
 import React, { useCallback, useState } from "react";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { Typography, Link, TextField } from "@material-ui/core";
+import { Typography, TextField } from "@material-ui/core";
 import { fetchSearch } from "../../services/services";
+import { Link } from "react-router-dom";
 
 const Autosuggest = ({ value, setValue }) => {
-  const [searchItems, setSearchItems] = useState([]);
+  const [options, setOptions] = useState([]);
 
   const debounce = (func) => {
     let timer;
@@ -20,9 +21,9 @@ const Autosuggest = ({ value, setValue }) => {
 
   const handleChange = async (event) => {
     if (event.target.value.length > 0) {
-      setSearchItems(await fetchSearch(event.target.value, 1));
+      setOptions(await fetchSearch(event.target.value, 1));
     } else {
-      setSearchItems([]);
+      setOptions([]);
     }
     setValue(event.target.value);
   };
@@ -34,10 +35,10 @@ const Autosuggest = ({ value, setValue }) => {
     <>
       <Autocomplete
         freeSolo
-        options={searchItems}
+        options={options}
         renderOption={(option) => (
           <Typography>
-            <Link href="#" target="_blank" style={{ textDecoration: "none" }}>
+            <Link to={"/movie/" + option.id} style={{ textDecoration: "none" }}>
               {option.title ? option.title : option.name}
             </Link>
           </Typography>

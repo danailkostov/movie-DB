@@ -21,7 +21,7 @@ const AppProvider = ({ children }) => {
   //date maximum 2021-02-27  minimum - 2021-01-10
   const [searchQuery, setSearchQuery] = useState("");
   const [searchPage, setSearchPage] = useState(1);
-  const [searchItems, setSearchItems] = useState(null);
+  const [searchItems, setSearchItems] = useState([]);
   const [nowItems, setNowItems] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [genres, setGenres] = useState(null);
@@ -35,7 +35,6 @@ const AppProvider = ({ children }) => {
   const [isDay, setIsDay] = useState(true);
   const [isTV, setIsTV] = useState(false);
   const [upcomingList, setUpcomingList] = useState(null);
-  console.log(tvGenres);
 
   useEffect(() => {
     const fetchAPI = async () => {
@@ -84,7 +83,8 @@ const AppProvider = ({ children }) => {
         setIsTV,
         topRatedMovies,
         topRatedTVs,
-        upcomingList
+        upcomingList,
+        setSearchItems
       }}
     >
       {children}
