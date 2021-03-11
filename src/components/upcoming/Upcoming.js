@@ -1,4 +1,4 @@
-import { Link, Typography } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { useGlobalContext } from "../../utils/context";
@@ -7,12 +7,15 @@ import ReactPlayer from "react-player";
 import { makeStyles } from "@material-ui/core/styles";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
+import Modal from "@material-ui/core/Modal";
+import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
 
 const useStyles = makeStyles((theme) => ({
   slide: {
+    position: "relative",
     transition: "transform 300ms",
-    height: "400px",
-    width: "500px",
+    height: "300px",
+    width: "20vw",
     margin: "0 auto",
     [theme.breakpoints.only("xs")]: {
       width: "70vw",
@@ -24,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
       width: "28vw",
     },
     [theme.breakpoints.only("lg")]: {
-      width: "14vw",
+      width: "25vw",
     },
   },
   arrow: {
@@ -47,9 +50,20 @@ const useStyles = makeStyles((theme) => ({
 
 const Upcoming = () => {
   const classes = useStyles();
-  const { upcomingList } = useGlobalContext();
+  const { upcomingList, posterUrl } = useGlobalContext();
   const [test, setTest] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentVideo, setCurrentVideo] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = (trailer) => {
+    setOpen(true);
+    setCurrentVideo(trailer);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -112,7 +126,7 @@ const Upcoming = () => {
   };
 
   return (
-    <>
+    <div style={{ paddingBottom: "10px" }}>
       <Typography
         variant="h4"
         component="h1"
@@ -125,24 +139,45 @@ const Upcoming = () => {
         Coming soon to theaters
       </Typography>
       <Slider {...settings}>
-        {test.map((video) => {
+        {test.map((video, index) => {
+          const { backdrop_path, title } = upcomingList[index];
+          console.log(video);
           return (
-            <div className={classes.slide}>
-              <Link href={video} target='_blank'>
+            <>
+              <div className={classes.slide}>
+                <Typography align="center">{title}</Typography>
+                <Button
+                  color="inherit"
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                  onClick={() => handleOpen(video)}
+                >
+                  <PlayCircleOutlineIcon style={{ fontSize: "70px" }} />
+                </Button>
+                <img
+                  src={`${posterUrl}${backdrop_path}`}
+                  alt={title}
+                  style={{ width: "100%", height: "100%", margin: "0 auto" }}
+                />
+              </div>
+              <Modal open={open} onClose={handleClose}>
                 <ReactPlayer
-                  light={true}
-                  url={video}
+                  url={currentVideo}
                   width="80%"
                   height="100%"
                   controls
                   style={{ margin: "0 auto" }}
                 />
-              </Link>
-            </div>
+              </Modal>
+            </>
           );
         })}
       </Slider>
-    </>
+    </div>
   );
 };
 
