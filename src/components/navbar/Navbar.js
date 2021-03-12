@@ -75,13 +75,6 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = () => {
   const classes = useStyles();
   const { setSearchQuery } = useGlobalContext();
-
-  const [searchType, setSearchType] = useState(10);
-
-  const handleType = (event) => {
-    setSearchType(event.target.value);
-  };
-
   const [value, setValue] = useState("");
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -99,20 +92,6 @@ const Navbar = () => {
           className={classes.paper}
           onSubmit={handleSubmit}
         >
-          <Hidden only={["xs", "sm"]}>
-            <FormControl className={classes.selects}>
-              <Select
-                value={searchType}
-                onChange={handleType}
-                variant="outlined"
-              >
-                <MenuItem value={10}>All</MenuItem>
-                <MenuItem value={20}>Movies</MenuItem>
-                <MenuItem value={30}>TV Shows</MenuItem>
-                <MenuItem value={40}>People</MenuItem>
-              </Select>
-            </FormControl>
-          </Hidden>
           <Autosuggest value={value} setValue={setValue} />
           <IconButton
             type="submit"
