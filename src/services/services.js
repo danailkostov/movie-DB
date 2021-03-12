@@ -145,5 +145,5 @@ export {
   fetchUpcoming,
   fetchMovieDetails,
   fetchMovieCrew,
-  fetchMovieCast
+  fetchMovieCast,
 };

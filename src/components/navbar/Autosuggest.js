@@ -15,17 +15,23 @@ const Autosuggest = ({ value, setValue }) => {
       timer = setTimeout(() => {
         timer = null;
         func.apply(context, args);
-      }, 500);
+      }, 200);
     };
   };
 
   const handleChange = async (event) => {
+    const data = await fetchSearch(event.target.value, 1);
     if (event.target.value.length > 0) {
       setOptions(await fetchSearch(event.target.value, 1));
+      setOptions((state) => [
+        ...state,
+        { title: "All Results", name: "All Results", media_type: "All" },
+      ]);
     } else {
       setOptions([]);
     }
     setValue(event.target.value);
+    console.log(data);
   };
 
   //useCallback provides us the memorized callback
@@ -34,16 +40,37 @@ const Autosuggest = ({ value, setValue }) => {
   return (
     <>
       <Autocomplete
+        filterOptions={(options, state) =>
+          options.filter((opt) =>
+            opt.title
+              ? opt.title.includes(state.inputValue) ||
+                opt.title === "All Results"
+              : opt.name.includes(state.inputValue) ||
+                opt.name === "All Results"
+          )
+        }
         freeSolo
         options={options}
         renderOption={(option) => (
           <Typography>
-            <Link to={"/movie/" + option.id} style={{ textDecoration: "none" }}>
+            <Link
+              to={
+                option.media_type === "movie"
+                  ? "/movie/" + option.id
+                  : option.media_type === "person"
+                  ? "/person/" + option.id
+                  : option.media_type === "tv"
+                  ? "/tv/" + option.id
+                  : "/allresults"
+              }
+              style={{ textDecoration: "none" }}
+            >
               {option.title ? option.title : option.name}
             </Link>
           </Typography>
         )}
         getOptionLabel={(option) => (option.title ? option.title : option.name)}
+        noOptionsText
         style={{ width: "40vw", borderRight: "none", borderLeft: "none" }}
         renderInput={(params) => {
           return (
@@ -54,7 +81,6 @@ const Autosuggest = ({ value, setValue }) => {
               placeholder="Search for movie, tv or person"
               value={value}
               onChange={optimisedVersion}
-              // old version - onChange={(e) => handleChange(e)} - without debounce
             />
           );
         }}

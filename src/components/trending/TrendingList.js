@@ -49,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
 
 const TrendingList = ({ movies, imageUrl }) => {
   const classes = useStyles();
-  console.log(movies);
   const [imageIndex, setImageIndex] = useState(0);
   const NextArrow = ({ onClick }) => {
     return (

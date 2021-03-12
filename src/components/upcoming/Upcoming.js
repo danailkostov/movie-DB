@@ -141,7 +141,6 @@ const Upcoming = () => {
       <Slider {...settings}>
         {test.map((video, index) => {
           const { backdrop_path, title } = upcomingList[index];
-          console.log(video);
           return (
             <>
               <div className={classes.slide}>
