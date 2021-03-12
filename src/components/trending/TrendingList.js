@@ -4,6 +4,7 @@ import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   slide: {
@@ -104,26 +105,24 @@ const TrendingList = ({ movies, imageUrl }) => {
     <>
       <Slider {...settings}>
         {movies.map((movie) => {
-          const {
-            poster_path,
-            title,
-            name,
-            release_date,
-            first_air_date,
-          } = movie;
+          const { poster_path, title, name, id } = movie;
           return (
             <>
               <div className={classes.slide}>
-                <img
-                  src={`${imageUrl}${poster_path}`}
-                  alt={title ? title : name}
-                  className={classes.image}
-                />
+                <Link to={title ? "/movie/" + id : /tv/ + id}>
+                  <img
+                    src={`${imageUrl}${poster_path}`}
+                    alt={title ? title : name}
+                    className={classes.image}
+                  />
+                </Link>
                 <Typography variant="subtitle1" component="h1" align="center">
-                  {title ? title : name}
-                </Typography>
-                <Typography variant="subtitle1" component="h1" align="center">
-                  {release_date ? release_date : first_air_date}
+                  <Link
+                    to={title ? "/movie/" + id : /tv/ + id}
+                    style={{ textDecoration: "none", color: "white" }}
+                  >
+                    {title ? title : name}
+                  </Link>
                 </Typography>
               </div>
             </>

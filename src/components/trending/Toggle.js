@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Typography } from "@material-ui/core";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
@@ -15,27 +15,32 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   btnGrp: {
-    border: "1px solid white",
+    backgroundColor: "white",
     zIndex: "1",
     [theme.breakpoints.only("xs")]: {
       marginTop: "5px",
     },
+  },
+  typo: {
+    fontWeight: "500",
   },
 }));
 
 const Toggle = ({ text, prev, next }) => {
   const classes = useStyles();
   const { setIsDay, isDay, isTV, setIsTV } = useGlobalContext();
-  const [alignment, setAlignment] = React.useState("left");
+  const [alignment, setAlignment] = useState("prev");
+  const [active, setActive] = useState(false);
 
   const handleAlignment = (event, newAlignment) => {
     setAlignment(newAlignment);
     if (text === "Trending") {
       setIsDay(!isDay);
+      setActive(!active);
     } else {
       setIsTV(!isTV);
+      setActive(!active);
     }
-    // setIsDay(!isDay);
   };
   return (
     <Box className={classes.box}>
@@ -43,9 +48,7 @@ const Toggle = ({ text, prev, next }) => {
         variant="h4"
         component="h1"
         align="center"
-        style={{
-          fontWeight: "500",
-        }}
+        className={classes.typo}
       >
         {text}
       </Typography>
@@ -53,20 +56,19 @@ const Toggle = ({ text, prev, next }) => {
         value={alignment}
         exclusive
         onChange={handleAlignment}
-        aria-label="text alignment"
         className={classes.btnGrp}
       >
         <ToggleButton
-          value="left"
-          aria-label="left aligned"
-          style={{ color: "white" }}
+          value="prev"
+          disabled={active ? false : true}
+          style={{ color: "black" }}
         >
           {prev}
         </ToggleButton>
         <ToggleButton
-          value="center"
-          aria-label="centered"
-          style={{ color: "white" }}
+          value="next"
+          disabled={active ? true : false}
+          style={{ color: "black" }}
         >
           {next}
         </ToggleButton>

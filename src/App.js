@@ -5,6 +5,7 @@ import SingleMovie from "./components/SingleMovie";
 import SingleTV from "./components/SingleTV";
 import SinglePerson from "./components/SinglePerson";
 import AllResults from "./components/AllResults";
+import GenresQuery from "./components/GenresQuery";
 
 function App() {
   return (
@@ -26,6 +27,9 @@ function App() {
           </Route>
           <Route path="/allresults">
             <AllResults />
+          </Route>
+          <Route path="/search/genres/:type">
+            <GenresQuery />
           </Route>
         </Switch>
       </div>

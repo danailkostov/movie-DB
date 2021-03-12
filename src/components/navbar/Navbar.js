@@ -1,14 +1,4 @@
-import {
-  AppBar,
-  Button,
-  IconButton,
-  Toolbar,
-  Paper,
-  MenuItem,
-  FormControl,
-  Select,
-  Hidden,
-} from "@material-ui/core";
+import { AppBar, Button, IconButton, Toolbar, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import React, { useState } from "react";

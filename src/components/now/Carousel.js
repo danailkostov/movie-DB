@@ -205,7 +205,10 @@ const Carousel = () => {
         variant="h4"
         component="h1"
       >
-        <Link to={"/movie/" + currentId} color="inherit">
+        <Link
+          to={isMovies ? "/movie/" + currentId : "/tv/" + currentId}
+          style={{ color: "white", textDecoration: "none" }}
+        >
           {isMovies ? movieTitle : tvTitle}
         </Link>
       </Typography>
@@ -228,7 +231,12 @@ const Carousel = () => {
                 className={classes.btn}
                 size="small"
               >
-                {name}
+                <Link
+                  to={"/search/genres/" + name}
+                  style={{ textDecoration: "none", color: "white" }}
+                >
+                  {name}
+                </Link>
               </Button>
             );
           }
