@@ -130,6 +130,20 @@ const fetchMovieCast = async (id) => {
   return movieCredits.cast;
 };
 
+const fetchMovieImages = async (id) => {
+  const movieImagesUrl = `${mainUrl}/movie/${id}/images?${apiKey}`;
+  const response = await fetch(movieImagesUrl);
+  const images = await response.json();
+  return images.backdrops;
+};
+
+const fetchMovieReviews = async (id) => {
+  const reviewsUrl = `${mainUrl}/movie/${id}/reviews?${apiKey}&page=1`;
+  const response = await fetch(reviewsUrl);
+  const reviews = await response.json();
+  return reviews.results;
+}
+
 export {
   fetchSearch,
   fetchPopular,
@@ -146,4 +160,6 @@ export {
   fetchMovieDetails,
   fetchMovieCrew,
   fetchMovieCast,
+  fetchMovieImages,
+  fetchMovieReviews,
 };
