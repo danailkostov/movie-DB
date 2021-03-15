@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     height: "50px",
-    marginTop: "10px",
     [theme.breakpoints.only("xs")]: {
       gridColumn: "1/3",
     },
@@ -52,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   appBar: {
-    backgroundColor: "black",
+    backgroundColor: "#0B0C10",
     padding: "10px",
   },
   menuBar: {

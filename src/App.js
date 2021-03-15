@@ -10,7 +10,10 @@ import GenresQuery from "./components/GenresQuery";
 function App() {
   return (
     <Router>
-      <div className="App" style={{ backgroundColor: "black", color: "white" }}>
+      <div
+        className="App"
+        style={{ backgroundColor: "#1f2833", color: "#45A29E" }}
+      >
         <Header />
         <Switch>
           <Route exact path="/">

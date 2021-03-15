@@ -142,7 +142,14 @@ const fetchMovieReviews = async (id) => {
   const response = await fetch(reviewsUrl);
   const reviews = await response.json();
   return reviews.results;
-}
+};
+
+const fetchRecMovies = async (id) => {
+  const recUrl = `${mainUrl}/movie/${id}/recommendations?${apiKey}&page=1`;
+  const response = await fetch(recUrl);
+  const rec = await response.json();
+  return rec.results;
+};
 
 export {
   fetchSearch,
@@ -162,4 +169,5 @@ export {
   fetchMovieCast,
   fetchMovieImages,
   fetchMovieReviews,
+  fetchRecMovies,
 };
