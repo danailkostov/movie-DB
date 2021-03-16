@@ -1,5 +1,6 @@
 import React from "react";
 import { Grid, Divider, Typography } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 const Cast = ({ movieCast }) => {
   const posterUrl = "https://image.tmdb.org/t/p/w185";
@@ -22,16 +23,23 @@ const Cast = ({ movieCast }) => {
         const { profile_path, name, character } = person;
         return index < 6 ? (
           <Grid item xs={6} sm={4} md={2}>
-            <img
-              src={`${posterUrl}${profile_path}`}
-              alt={name}
-              style={{
-                width: "100%",
-                borderRadius: "5px",
-              }}
-            />
+            <Link to={"/person/" + name}>
+              <img
+                src={`${posterUrl}${profile_path}`}
+                alt={name}
+                style={{
+                  width: "100%",
+                  borderRadius: "5px",
+                }}
+              />
+            </Link>
             <Typography component="h1" variant="h6">
-              {name}
+              <Link
+                to={"/person/" + name}
+                style={{ color: "#45A29E", textDecoration: "none" }}
+              >
+                {name}
+              </Link>
             </Typography>
             <Typography component="p" variant="p">
               {character}
@@ -40,8 +48,13 @@ const Cast = ({ movieCast }) => {
         ) : null;
       })}
       <Grid item xs={12}>
-        <Typography variant="body1" component="p" align='right'>
-          Full Cast & Crew
+        <Typography variant="body1" component="p" align="right">
+          <Link
+            to={"/staff"}
+            style={{ color: "#45A29E", textDecoration: "none" }}
+          >
+            Full Cast & Crew{" "}
+          </Link>
         </Typography>
       </Grid>
     </Grid>

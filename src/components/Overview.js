@@ -49,6 +49,7 @@ const Overview = ({
     currency: "USD",
   });
   const premiereDate = moment(release_date, "YYYY-MM-DD").year();
+  const releaseDate = moment(release_date, "YYYY-MM-DD").format("MMMM Do YYYY");
   const reviewDate = moment(reviews[0].created_at, "YYYY-MM-DD").format(
     "MMMM Do[,] YYYY"
   );
@@ -266,7 +267,10 @@ const Overview = ({
               </Link>
             </Typography>
             <Typography variant="h6" component="p">
-              <Link to={"/reviews"} style={{ color: "white" }}>
+              <Link
+                to={"/reviews"}
+                style={{ color: "#45A29E", textDecoration: "none" }}
+              >
                 All Reviews
               </Link>
             </Typography>
@@ -296,7 +300,7 @@ const Overview = ({
             </Typography>
             <Typography variant="h6" gutterBottom>
               Release Date:
-              <Typography variant="body2">{release_date}</Typography>
+              <Typography variant="body2">{releaseDate}</Typography>
             </Typography>
             <Typography variant="h6" gutterBottom>
               Revenue:

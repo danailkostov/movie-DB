@@ -1,5 +1,7 @@
 import { Grid, Divider, Typography } from "@material-ui/core";
 import React from "react";
+import { Link } from "react-router-dom";
+import StarIcon from "@material-ui/icons/Star";
 
 const posterUrl = "https://image.tmdb.org/t/p/w300";
 
@@ -19,26 +21,46 @@ const Recommended = ({ recMovies }) => {
         </Typography>
       </Grid>
       {recMovies.map((movie, index) => {
-        const { backdrop_path, vote_average, title } = movie;
+        const { backdrop_path, vote_average, title, id } = movie;
         return index < 4 ? (
           <Grid item xs={12} sm={6} md={3}>
-            <img
-              src={`${posterUrl}${backdrop_path}`}
-              alt={title}
-              style={{ width: "100%", borderRadius: "5px" }}
-            />
+            <Link to={"/movie/" + id}>
+              <img
+                src={`${posterUrl}${backdrop_path}`}
+                alt={title}
+                style={{ width: "100%", borderRadius: "5px" }}
+              />
+            </Link>
             <Typography
               style={{ display: "flex", justifyContent: "space-between" }}
             >
-              <span>{title}</span>
-              <span>{vote_average}</span>
+              <Link
+                to={"/movie/" + id}
+                style={{ color: "#45A29E", textDecoration: "none" }}
+              >
+                {title}
+              </Link>
+              <span>
+                {vote_average}{" "}
+                <StarIcon
+                  style={{
+                    color: "yellow",
+                  }}
+                  fontSize="inherit"
+                />
+              </span>
             </Typography>
           </Grid>
         ) : null;
       })}
       <Grid item xs={12}>
         <Typography align="right" variant="body1" component="p">
-          All Recomendations
+          <Link
+            to={"/recommendations"}
+            style={{ color: "#45A29E", textDecoration: "none" }}
+          >
+            All Recomendations
+          </Link>
         </Typography>
       </Grid>
     </Grid>
