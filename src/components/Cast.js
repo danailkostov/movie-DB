@@ -16,15 +16,12 @@ const Cast = ({ movieCast }) => {
           style={{ display: "flex", justifyContent: "space-between" }}
         >
           Top Billed Cast
-          <Typography variant="body1" component="p">
-            Full Cast & Crew
-          </Typography>
         </Typography>
       </Grid>
       {movieCast.map((person, index) => {
         const { profile_path, name, character } = person;
         return index < 6 ? (
-          <Grid item xs={2}>
+          <Grid item xs={6} sm={4} md={2}>
             <img
               src={`${posterUrl}${profile_path}`}
               alt={name}
@@ -42,6 +39,11 @@ const Cast = ({ movieCast }) => {
           </Grid>
         ) : null;
       })}
+      <Grid item xs={12}>
+        <Typography variant="body1" component="p" align='right'>
+          Full Cast & Crew
+        </Typography>
+      </Grid>
     </Grid>
   );
 };

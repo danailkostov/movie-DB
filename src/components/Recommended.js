@@ -5,7 +5,7 @@ const posterUrl = "https://image.tmdb.org/t/p/w300";
 
 const Recommended = ({ recMovies }) => {
   return (
-    <Grid container style={{ marginTop: "30px" }} spacing={2}>
+    <Grid container style={{ marginTop: "10px" }} spacing={2}>
       <Grid item xs={12}>
         <Divider light={true} style={{ backgroundColor: "#45A29E" }} />
       </Grid>
@@ -16,13 +16,12 @@ const Recommended = ({ recMovies }) => {
           style={{ display: "flex", justifyContent: "space-between" }}
         >
           Recommendations
-          <Typography>All Recomendations</Typography>
         </Typography>
       </Grid>
       {recMovies.map((movie, index) => {
         const { backdrop_path, vote_average, title } = movie;
         return index < 4 ? (
-          <Grid item xs={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <img
               src={`${posterUrl}${backdrop_path}`}
               alt={title}
@@ -37,6 +36,11 @@ const Recommended = ({ recMovies }) => {
           </Grid>
         ) : null;
       })}
+      <Grid item xs={12}>
+        <Typography align="right" variant="body1" component="p">
+          All Recomendations
+        </Typography>
+      </Grid>
     </Grid>
   );
 };

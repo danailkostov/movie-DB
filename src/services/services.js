@@ -151,6 +151,13 @@ const fetchRecMovies = async (id) => {
   return rec.results;
 };
 
+const fetchCertification = async (id) => {
+  const certUrl = `${mainUrl}/movie/${id}/release_dates?${apiKey}`;
+  const response = await fetch(certUrl);
+  const certs = await response.json();
+  const certUS = certs.results.filter((cert) => cert.iso_3166_1 === "US");
+  return certUS[0].release_dates[0].certification;
+};
 export {
   fetchSearch,
   fetchPopular,
@@ -170,4 +177,5 @@ export {
   fetchMovieImages,
   fetchMovieReviews,
   fetchRecMovies,
+  fetchCertification,
 };

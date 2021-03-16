@@ -11,6 +11,8 @@ import {
   fetchMovieImages,
   fetchMovieReviews,
   fetchRecMovies,
+  fetchVideo,
+  fetchCertification,
 } from "../services/services";
 
 const SingleMovie = () => {
@@ -21,6 +23,8 @@ const SingleMovie = () => {
   const [images, setImages] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [recMovies, setRecMovies] = useState([]);
+  const [video, setVideo] = useState([]);
+  const [cert, setCert] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const directors = movieCrew.filter((member) => member.job === "Director");
   const writers = movieCrew.filter((member) => member.department === "Writing");
@@ -34,6 +38,8 @@ const SingleMovie = () => {
       setImages(await fetchMovieImages(id));
       setReviews(await fetchMovieReviews(id));
       setRecMovies(await fetchRecMovies(id));
+      setVideo(await fetchVideo(id));
+      setCert(await fetchCertification(id));
       setIsLoading(false);
     };
     fetchAPI();
@@ -51,6 +57,8 @@ const SingleMovie = () => {
         directors={directors}
         writers={writers}
         reviews={reviews}
+        video={video}
+        cert={cert}
       />
       {/* Cast Section*/}
       <Cast movieCast={movieCast} />
