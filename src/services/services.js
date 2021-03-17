@@ -38,8 +38,7 @@ const fetchVideo = async (id) => {
   const trailerKey = videosData.results
     .filter((video) => video.type === "Trailer")
     .map((item) => item.key);
-
-  return `${youtubeUrl}${trailerKey[0]}`;
+  return trailerKey.length > 0 ? `${youtubeUrl}${trailerKey[0]}` : null;
 };
 
 const fetchGenres = async () => {
@@ -64,7 +63,7 @@ const fetchVideoTV = async (id) => {
     .filter((video) => video.type === "Trailer")
     .map((item) => item.key);
 
-  return `${youtubeUrl}${trailerKey[0]}`;
+  return trailerKey.length > 0 ? `${youtubeUrl}${trailerKey[0]}` : null;
 };
 
 const fetchGenresTV = async () => {
@@ -158,6 +157,69 @@ const fetchCertification = async (id) => {
   const certUS = certs.results.filter((cert) => cert.iso_3166_1 === "US");
   return certUS[0].release_dates[0].certification;
 };
+
+const fetchTVDetails = async (id) => {
+  const detailsUrl = `${mainUrl}/tv/${id}?${apiKey}`;
+  const response = await fetch(detailsUrl);
+  const tvDetails = await response.json();
+  return tvDetails;
+};
+
+const fetchTVReviews = async (id) => {
+  const reviewsUrl = `${mainUrl}/tv/${id}/reviews?${apiKey}&page=1`;
+  const response = await fetch(reviewsUrl);
+  const reviews = await response.json();
+  return reviews.results;
+};
+
+const fetchTVCerts = async (id) => {
+  const certUrl = `${mainUrl}/tv/${id}/content_ratings?${apiKey}`;
+  const response = await fetch(certUrl);
+  const certs = await response.json();
+  const certUS = certs.results.filter((cert) => cert.iso_3166_1 === "US");
+  return certs.length > 0
+    ? certUS
+      ? certUS[0].rating
+      : certs.results[0].rating
+    : null;
+};
+
+const fetchTVCast = async (id) => {
+  const castUrl = `${mainUrl}/tv/${id}/credits?${apiKey}`;
+  const response = await fetch(castUrl);
+  const cast = await response.json();
+  return cast.cast;
+};
+
+const fetchRecTV = async (id) => {
+  const recUrl = `${mainUrl}/tv/${id}/recommendations?${apiKey}&page=1`;
+  const response = await fetch(recUrl);
+  const rec = await response.json();
+  return rec.results;
+};
+
+const fetchPerson = async (id) => {
+  const personUrl = `${mainUrl}/person/${id}?${apiKey}`;
+  const response = await fetch(personUrl);
+  const person = await response.json();
+  return person;
+};
+
+const fetchKnownFor = async (id) => {
+  const url = `${mainUrl}/person/${id}/combined_credits?${apiKey}`;
+  const response = await fetch(url);
+  const knownFor = await response.json();
+  const cast = knownFor.cast;
+  const crew = knownFor.crew;
+  const sortCastMovies = cast
+    .sort((a, b) => (a.popularity < b.popularity ? 1 : -1))
+    .slice(0, 6);
+  const sortCrewMovies = crew
+    .sort((a, b) => (a.popularity < b.popularity ? 1 : -1))
+    .slice(0, 6);
+  return { sortCastMovies, sortCrewMovies };
+};
+
 export {
   fetchSearch,
   fetchPopular,
@@ -178,4 +240,11 @@ export {
   fetchMovieReviews,
   fetchRecMovies,
   fetchCertification,
+  fetchTVDetails,
+  fetchTVReviews,
+  fetchTVCerts,
+  fetchTVCast,
+  fetchRecTV,
+  fetchPerson,
+  fetchKnownFor,
 };

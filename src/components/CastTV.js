@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Divider, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
-const Cast = ({ movieCast }) => {
+const CastTV = ({ tvCast }) => {
   const posterUrl = "https://image.tmdb.org/t/p/w185";
 
   return (
@@ -19,11 +19,11 @@ const Cast = ({ movieCast }) => {
           Top Billed Cast
         </Typography>
       </Grid>
-      {movieCast.map((person, index) => {
-        const { profile_path, name, character, id } = person;
+      {tvCast.map((person, index) => {
+        const { profile_path, name, character } = person;
         return index < 6 ? (
           <Grid item xs={6} sm={4} md={2}>
-            <Link to={"/person/" + name + "/" + id}>
+            <Link to={"/person/" + name}>
               <img
                 src={`${posterUrl}${profile_path}`}
                 alt={name}
@@ -35,7 +35,7 @@ const Cast = ({ movieCast }) => {
             </Link>
             <Typography component="h1" variant="h6">
               <Link
-                to={"/person/" + name + "/" + id}
+                to={"/person/" + name}
                 style={{ color: "#45A29E", textDecoration: "none" }}
               >
                 {name}
@@ -61,4 +61,4 @@ const Cast = ({ movieCast }) => {
   );
 };
 
-export default Cast;
+export default CastTV;

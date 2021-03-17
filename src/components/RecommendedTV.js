@@ -6,7 +6,7 @@ import NoPoster from "../images/no-cover.png";
 
 const posterUrl = "https://image.tmdb.org/t/p/w300";
 
-const Recommended = ({ recMovies }) => {
+const RecommendedTV = ({ tvRec }) => {
   return (
     <Grid container style={{ marginTop: "10px" }} spacing={2}>
       <Grid item xs={12}>
@@ -21,14 +21,14 @@ const Recommended = ({ recMovies }) => {
           Recommendations
         </Typography>
       </Grid>
-      {recMovies.map((movie, index) => {
-        const { backdrop_path, vote_average, title, id } = movie;
+      {tvRec.map((tv, index) => {
+        const { backdrop_path, vote_average, name, id } = tv;
         return index < 4 ? (
           <Grid item xs={12} sm={6} md={3}>
-            <Link to={"/movie/" + id}>
+            <Link to={"/tv/" + id}>
               <img
                 src={backdrop_path ? `${posterUrl}${backdrop_path}` : NoPoster}
-                alt={title}
+                alt={name}
                 style={{ width: "100%", borderRadius: "5px", height: "200px" }}
               />
             </Link>
@@ -36,10 +36,10 @@ const Recommended = ({ recMovies }) => {
               style={{ display: "flex", justifyContent: "space-between" }}
             >
               <Link
-                to={"/movie/" + id}
+                to={"/tv/" + id}
                 style={{ color: "#45A29E", textDecoration: "none" }}
               >
-                {title.length > 29 ? title.substr(0, 30) + "..." : title}
+                {name.length > 29 ? name.substr(0, 30) + "..." : name}
               </Link>
               <span>
                 {vote_average}{" "}
@@ -68,4 +68,4 @@ const Recommended = ({ recMovies }) => {
   );
 };
 
-export default Recommended;
+export default RecommendedTV;

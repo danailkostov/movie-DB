@@ -29,7 +29,7 @@ function App() {
           <Route path="/tv/:id">
             <SingleTV />
           </Route>
-          <Route path="/person/:name">
+          <Route path="/person/:name/:id">
             <SinglePerson />
           </Route>
           <Route path="/allresults">

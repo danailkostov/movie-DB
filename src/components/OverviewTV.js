@@ -16,47 +16,36 @@ import StarIcon from "@material-ui/icons/Star";
 import moment from "moment";
 import { Link } from "react-router-dom";
 
-const Overview = ({
-  movieDetails,
-  directors,
-  writers,
-  reviews,
-  video,
-  cert,
-}) => {
-  console.log(video);
+const OverviewTV = ({ tvDetails, tvReviews, tvCert, tvVideo }) => {
+  console.log(tvReviews);
   const { posterUrl } = useGlobalContext();
+  const [value, setValue] = useState(0);
+  const [open, setOpen] = useState(false);
   const {
     poster_path,
-    title,
-    release_date,
-    runtime,
+    name,
+    first_air_date,
+    episode_run_time,
     genres,
     vote_average,
     tagline,
     overview,
-    budget,
     spoken_languages,
     production_companies,
-    revenue,
     status,
-  } = movieDetails;
-  const [value, setValue] = useState(0);
-  const [open, setOpen] = useState(false);
-  const currency = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
-  const premiereDate = moment(release_date, "YYYY-MM-DD").year();
-  const releaseDate = moment(release_date, "YYYY-MM-DD").format("MMMM Do YYYY");
+    created_by,
+    number_of_episodes,
+    number_of_seasons,
+  } = tvDetails;
+  const premiereDate = moment(first_air_date, "YYYY-MM-DD").year();
+  const releaseDate = moment(first_air_date, "YYYY-MM-DD").format(
+    "MMMM Do YYYY"
+  );
   const reviewDate =
-    reviews.length > 0
-      ? moment(reviews[0].created_at, "YYYY-MM-DD").format("MMMM Do[,] YYYY")
+    tvReviews.length > 0
+      ? moment(tvReviews[0].created_at, "YYYY-MM-DD").format("MMMM Do[,] YYYY")
       : null;
-  const duration = moment
-    .utc(moment.duration(runtime, "minutes").asMilliseconds())
-    .format("H[h] m[min]");
-
+  console.log(reviewDate);
   const allGenres = genres.map((item, index) =>
     index === genres.length - 1 ? (
       <Link
@@ -76,6 +65,7 @@ const Overview = ({
       </Link>
     )
   );
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -126,7 +116,7 @@ const Overview = ({
         style={{ marginTop: "10px" }}
       >
         <Grid item xs={12} md={4} style={{ position: "relative" }}>
-          {video && (
+          {tvVideo && (
             <Button
               color="inherit"
               style={{
@@ -142,7 +132,7 @@ const Overview = ({
           )}
           <img
             src={`${posterUrl}${poster_path}`}
-            alt={title}
+            alt={name}
             style={{ width: "100%", height: "100%" }}
           />
         </Grid>
@@ -156,7 +146,7 @@ const Overview = ({
               marginLeft: "25px",
             }}
           >
-            {title}
+            {name}
             <Typography
               variant="h4"
               component="p"
@@ -181,7 +171,7 @@ const Overview = ({
             gutterBottom
             style={{ marginLeft: "25px" }}
           >
-            {premiereDate} | {allGenres} | {duration} | {cert}
+            {premiereDate} | {allGenres} | {episode_run_time[0]}mins | {tvCert}
           </Typography>
           <Tabs
             value={value}
@@ -203,71 +193,50 @@ const Overview = ({
             <Typography variant="subtitle1" component="p" gutterBottom>
               {overview}
             </Typography>
-            <Typography variant="h6" component="h2">
-              Directors
-            </Typography>
-            <Typography variant="subtitle1" component="p" gutterBottom>
-              {directors.map((director, index) =>
-                index === directors.length - 1 ? (
-                  <Link
-                    to={"/person/" + director.name}
-                    style={{ textDecoration: "none", color: "#45A29E" }}
-                  >
-                    {director.name}
-                  </Link>
-                ) : (
-                  <Link
-                    to={"/person/" + director.name}
-                    style={{ textDecoration: "none", color: "#45A29E" }}
-                  >
-                    {director.name},{" "}
-                  </Link>
-                )
-              )}
-            </Typography>
-            <Typography variant="h6" component="h2">
-              Writers
-            </Typography>
-            <Typography
-              variant="subtitle1"
-              component="p"
-              gutterBottom
-              paragraph
-            >
-              {writers.map((writer, index) =>
-                index === writers.length - 1 ? (
-                  <Link
-                    to={"/person/" + writer.name}
-                    style={{ textDecoration: "none", color: "#45A29E" }}
-                  >
-                    {writer.name}
-                  </Link>
-                ) : (
-                  <Link
-                    to={"/person/" + writer.name}
-                    style={{ textDecoration: "none", color: "#45A29E" }}
-                  >
-                    {writer.name},{" "}
-                  </Link>
-                )
-              )}
-            </Typography>
+            {created_by.length > 0 && (
+              <>
+                <Typography variant="h6" component="h2">
+                  Creators
+                </Typography>
+                <Typography variant="subtitle1" component="p" gutterBottom>
+                  {created_by.map((creator, index) =>
+                    index === created_by.length - 1 ? (
+                      <Link
+                        to={"/person/" + creator.name}
+                        style={{ textDecoration: "none", color: "#45A29E" }}
+                      >
+                        {creator.name}
+                      </Link>
+                    ) : (
+                      <Link
+                        to={"/person/" + creator.name}
+                        style={{ textDecoration: "none", color: "#45A29E" }}
+                      >
+                        {creator.name},{" "}
+                      </Link>
+                    )
+                  )}
+                </Typography>
+              </>
+            )}
           </TabPanel>
           <TabPanel value={value} index={1}>
-            {reviews.length > 0 ? (
+            {tvReviews.length > 0 ? (
               <>
                 <Typography variant="h6">
-                  A review by {reviews[0].author}
+                  A review by {tvReviews[0].author}
                 </Typography>
                 <Typography variant="body2" gutterBottom paragraph>
                   Written by{" "}
-                  <span style={{ fontWeight: "500" }}>{reviews[0].author}</span>{" "}
+                  <span style={{ fontWeight: "500" }}>
+                    {tvReviews[0].author}
+                  </span>{" "}
                   on {reviewDate}
                 </Typography>
                 <Typography gutterBottom paragraph>
-                  {reviews[0].content.substr(0, 1000)}...
+                  {tvReviews[0].content.substr(0, 1000)}...
                   <Link
-                    to={"/review/" + reviews[0].id}
+                    to={"/review/" + tvReviews[0].id}
                     style={{ color: "white" }}
                   >
                     Read more
@@ -287,12 +256,6 @@ const Overview = ({
             )}
           </TabPanel>
           <TabPanel value={value} index={2}>
-            <Typography variant="h6" gutterBottom>
-              Budget:{" "}
-              <Typography variant="body2">
-                {budget === 0 ? "-" : `${currency.format(budget)}`}
-              </Typography>
-            </Typography>
             <Typography variant="h6" gutterBottom>
               Languages:
               <Typography variant="body2">
@@ -314,10 +277,12 @@ const Overview = ({
               <Typography variant="body2">{releaseDate}</Typography>
             </Typography>
             <Typography variant="h6" gutterBottom>
-              Revenue:
-              <Typography variant="body2">
-                {revenue === 0 ? "-" : `${currency.format(revenue)}`}
-              </Typography>
+              Seasons:
+              <Typography variant="body2">{number_of_seasons}</Typography>
+            </Typography>
+            <Typography variant="h6" gutterBottom>
+              Episodes:
+              <Typography variant="body2">{number_of_episodes}</Typography>
             </Typography>
             <Typography variant="h6" gutterBottom>
               Status:
@@ -331,10 +296,10 @@ const Overview = ({
         onClose={() => setOpen(false)}
         style={{ margin: "50px", border: "none" }}
       >
-        <ReactPlayer url={video} width="100%" height="100%" controls />
+        <ReactPlayer url={tvVideo} width="100%" height="100%" controls />
       </Modal>
     </>
   );
 };
 
-export default Overview;
+export default OverviewTV;
