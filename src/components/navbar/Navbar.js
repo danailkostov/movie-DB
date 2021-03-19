@@ -82,14 +82,14 @@ const Navbar = () => {
           onSubmit={handleSubmit}
         >
           <Autosuggest value={value} setValue={setValue} />
-          <IconButton
+          {/* <IconButton
             type="submit"
             className={classes.iconButton}
             aria-label="search"
             onClick={handleSubmit}
           >
             <SearchIcon />
-          </IconButton>
+          </IconButton> */}
         </Paper>
         <Button color="inherit" className={classes.signBtn}>
           Sign in

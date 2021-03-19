@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from "react";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { Typography, TextField } from "@material-ui/core";
+import { Typography, TextField, Button, Divider } from "@material-ui/core";
 import { fetchSearch } from "../../services/services";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const Autosuggest = ({ value, setValue }) => {
   const [options, setOptions] = useState([]);
@@ -37,6 +37,11 @@ const Autosuggest = ({ value, setValue }) => {
   //useCallback provides us the memorized callback
   const optimisedVersion = useCallback(debounce(handleChange), []);
 
+  const history = useHistory();
+  const handleClick = (id, type) => {
+    history.push(`/${type}/${id}`);
+  };
+
   return (
     <>
       <Autocomplete
@@ -52,26 +57,20 @@ const Autosuggest = ({ value, setValue }) => {
         freeSolo
         options={options}
         renderOption={(option) => (
-          <Typography>
-            <Link
-              to={
-                option.media_type === "movie"
-                  ? "/movie/" + option.id
-                  : option.media_type === "person"
-                  ? "/person/" + option.id
-                  : option.media_type === "tv"
-                  ? "/tv/" + option.id
-                  : "/allresults"
-              }
-              style={{ textDecoration: "none" }}
-            >
+          <Typography
+            style={{ width: "100%" }}
+            onClick={() => handleClick(option.id, option.media_type)}
+          >
+            <Typography style={{ width: "100%" }} variant="subtitle2">
               {option.title ? option.title : option.name}
-            </Link>
+            </Typography>
+            <Typography variant="body2" gutterBottom>{option.media_type}</Typography>
+            <Divider />
           </Typography>
         )}
         getOptionLabel={(option) => (option.title ? option.title : option.name)}
         noOptionsText
-        style={{ width: "40vw", borderRight: "none", borderLeft: "none" }}
+        style={{ width: "100%" }}
         renderInput={(params) => {
           return (
             <TextField
