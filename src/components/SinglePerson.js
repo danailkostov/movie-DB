@@ -1,6 +1,16 @@
-import { Container, Grid, Typography } from "@material-ui/core";
+import {
+  Container,
+  Grid,
+  Typography,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Box,
+} from "@material-ui/core";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 import { fetchPerson, fetchKnownFor } from "../services/services";
 
 const SinglePerson = () => {
@@ -90,13 +100,79 @@ const SinglePerson = () => {
                       alt={title ? title : name}
                       style={{ borderRadius: "5px", width: "100%" }}
                     />
-                    <Typography align="center" variant='body2'>
+                    <Typography align="center" variant="body2">
                       {title ? title : name}
                     </Typography>
                   </Grid>
                 );
               })
             : null}
+        </Grid>
+        <Grid item xs={12} style={{ margin: "10px 0px" }}>
+          {knownFor.sortProductionsByYear.map((item) => {
+            const { department, productions } = item[0];
+            console.log(department);
+            return (
+              <>
+                <Accordion
+                  style={{
+                    backgroundColor: "#45A29E",
+                    color: "#1f2833",
+                    border: "1px solid #45A29E",
+                    boxShadow: "none",
+                  }}
+                >
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon style={{ color: "white" }} />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography> {department}</Typography>
+                  </AccordionSummary>
+                  {productions.map((production) => {
+                    const { title, id, character, job, date } = production;
+                    return (
+                      <>
+                        <AccordionDetails
+                          style={{
+                            backgroundColor: "#1f2833",
+                            color: "#45A29E",
+                          }}
+                        >
+                          <Box
+                            style={{
+                              width: "100%",
+                              display: "flex",
+                              justifyContent: "space-between",
+                              borderBottom: "1px solid white",
+                            }}
+                          >
+                            <Typography variant="subtitle2" gutterBottom>
+                              <Link
+                                to={"/movie/" + id}
+                                style={{
+                                  color: "inherit",
+                                  textDecoration: "none",
+                                }}
+                              >
+                                {title}
+                              </Link>
+                              <Typography variant="body2">
+                                {character ? `as ${character}` : `as ${job}`}
+                              </Typography>
+                            </Typography>
+                            <Typography variant="body2">
+                              {date ? date : "in production"}
+                            </Typography>
+                          </Box>
+                        </AccordionDetails>
+                      </>
+                    );
+                  })}
+                </Accordion>
+              </>
+            );
+          })}
         </Grid>
       </Grid>
     </Container>

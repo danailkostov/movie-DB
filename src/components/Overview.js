@@ -210,14 +210,14 @@ const Overview = ({
               {directors.map((director, index) =>
                 index === directors.length - 1 ? (
                   <Link
-                    to={"/person/" + director.name}
+                    to={"/person/" + director.name + "/" + director.id}
                     style={{ textDecoration: "none", color: "#45A29E" }}
                   >
                     {director.name}
                   </Link>
                 ) : (
                   <Link
-                    to={"/person/" + director.name}
+                    to={"/person/" + director.name + "/" + director.id}
                     style={{ textDecoration: "none", color: "#45A29E" }}
                   >
                     {director.name},{" "}
@@ -237,14 +237,14 @@ const Overview = ({
               {writers.map((writer, index) =>
                 index === writers.length - 1 ? (
                   <Link
-                    to={"/person/" + writer.name}
+                    to={"/person/" + writer.name + "/" + writer.id}
                     style={{ textDecoration: "none", color: "#45A29E" }}
                   >
                     {writer.name}
                   </Link>
                 ) : (
                   <Link
-                    to={"/person/" + writer.name}
+                    to={"/person/" + writer.name + "/" + writer.id}
                     style={{ textDecoration: "none", color: "#45A29E" }}
                   >
                     {writer.name},{" "}

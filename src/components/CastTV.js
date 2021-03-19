@@ -20,10 +20,10 @@ const CastTV = ({ tvCast }) => {
         </Typography>
       </Grid>
       {tvCast.map((person, index) => {
-        const { profile_path, name, character } = person;
+        const { profile_path, name, character, id } = person;
         return index < 6 ? (
           <Grid item xs={6} sm={4} md={2}>
-            <Link to={"/person/" + name}>
+            <Link to={"/person/" + name + "/" + id}>
               <img
                 src={`${posterUrl}${profile_path}`}
                 alt={name}
@@ -35,7 +35,7 @@ const CastTV = ({ tvCast }) => {
             </Link>
             <Typography component="h1" variant="h6">
               <Link
-                to={"/person/" + name}
+                to={"/person/" + name + "/" + id}
                 style={{ color: "#45A29E", textDecoration: "none" }}
               >
                 {name}

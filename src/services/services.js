@@ -209,15 +209,82 @@ const fetchKnownFor = async (id) => {
   const url = `${mainUrl}/person/${id}/combined_credits?${apiKey}`;
   const response = await fetch(url);
   const knownFor = await response.json();
-  const cast = knownFor.cast;
-  const crew = knownFor.crew;
-  const sortCastMovies = cast
-    .sort((a, b) => (a.popularity < b.popularity ? 1 : -1))
+  const obj = {};
+  const castCredits = knownFor.cast;
+  const crewCredits = knownFor.crew;
+  castCredits.map((item) => {
+    const { id, title, name, release_date, first_air_date, character } = item;
+    const movieObj = {
+      id: id,
+      title: title ? title : name,
+      date: release_date ? release_date : first_air_date,
+      character: character,
+    };
+    if (obj.Acting) {
+      obj.Acting.push(movieObj);
+    } else {
+      obj.Acting = [];
+    }
+    return obj;
+  });
+  const customCrew = crewCredits.reduce((acc, item) => {
+    const {
+      department,
+      id,
+      title,
+      name,
+      release_date,
+      first_air_date,
+      job,
+    } = item;
+    const movieObj = {
+      id: id,
+      title: title ? title : name,
+      date: release_date ? release_date : first_air_date,
+      job: job,
+    };
+    if (obj[department]) {
+      obj[department].push(movieObj);
+    } else {
+      obj[department] = [movieObj];
+    }
+    return obj;
+  }, {});
+
+  const sortByDepartmentsCount = Object.keys(customCrew)
+    .map((k) => {
+      return { department: k, productions: customCrew[k] };
+    })
+    .sort((a, b) => b.productions.length - a.productions.length);
+
+  const sortProductionsByYear = sortByDepartmentsCount.map((item) => {
+    const { productions, department } = item;
+    const sorted = [];
+    const updated = {
+      department: department,
+      productions: productions.sort((a, b) =>
+        new Date(a.date === undefined ? "3000-10-10" : a.date) <
+        new Date(b.date === undefined ? "3000-10-10" : b.date)
+          ? 1
+          : -1
+      ),
+    };
+    sorted.push(updated);
+    return sorted;
+  });
+
+  const sortCastMovies = castCredits
+    .sort((a, b) => (a.vote_count < b.vote_count ? 1 : -1))
     .slice(0, 6);
-  const sortCrewMovies = crew
-    .sort((a, b) => (a.popularity < b.popularity ? 1 : -1))
+  const sortCrewMovies = crewCredits
+    .sort((a, b) => (a.vote_count < b.vote_count ? 1 : -1))
     .slice(0, 6);
-  return { sortCastMovies, sortCrewMovies };
+
+  return {
+    sortCastMovies,
+    sortCrewMovies,
+    sortProductionsByYear,
+  };
 };
 
 export {

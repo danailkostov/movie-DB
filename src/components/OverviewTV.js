@@ -202,14 +202,14 @@ const OverviewTV = ({ tvDetails, tvReviews, tvCert, tvVideo }) => {
                   {created_by.map((creator, index) =>
                     index === created_by.length - 1 ? (
                       <Link
-                        to={"/person/" + creator.name}
+                        to={"/person/" + creator.name + "/" + creator.id}
                         style={{ textDecoration: "none", color: "#45A29E" }}
                       >
                         {creator.name}
                       </Link>
                     ) : (
                       <Link
-                        to={"/person/" + creator.name}
+                        to={"/person/" + creator.name + "/" + creator.id}
                         style={{ textDecoration: "none", color: "#45A29E" }}
                       >
                         {creator.name},{" "}
