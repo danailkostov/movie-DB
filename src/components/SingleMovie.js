@@ -50,7 +50,7 @@ const SingleMovie = () => {
   }
 
   return (
-    <Container maxWidth="lg" component="section">
+    <Container maxWidth="lg" component="section" disableGutters>
       {/* Overview Section */}
       <Overview
         movieDetails={movieDetails}

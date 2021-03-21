@@ -23,7 +23,7 @@ const Cast = ({ movieCast }) => {
         const { profile_path, name, character, id } = person;
         return index < 6 ? (
           <Grid item xs={6} sm={4} md={2}>
-            <Link to={"/person/" + name + "/" + id}>
+            <Link to={"/person/" + id}>
               <img
                 src={`${posterUrl}${profile_path}`}
                 alt={name}
@@ -35,7 +35,7 @@ const Cast = ({ movieCast }) => {
             </Link>
             <Typography component="h1" variant="h6">
               <Link
-                to={"/person/" + name + "/" + id}
+                to={"/person/" + id}
                 style={{ color: "#45A29E", textDecoration: "none" }}
               >
                 {name}

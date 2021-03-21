@@ -13,16 +13,10 @@ const Content = () => {
     );
   }
   return (
-    <Container component="main">
+    <Container component="main" disableGutters>
       <InitContent />
     </Container>
   );
-  //   return (
-  //     <Container component="main" style={{ marginTop: "50px" }}>
-  //       <SearchContent />
-  //     </Container>
-  //   );
-  // };
 };
 
 export default Content;

@@ -68,7 +68,7 @@ const Toggle = ({ text, prev, next }) => {
         <ToggleButton
           value="next"
           disabled={active ? true : false}
-          style={{ color: "black" }}
+          style={{ color: "black", width: "100%" }}
         >
           {next}
         </ToggleButton>

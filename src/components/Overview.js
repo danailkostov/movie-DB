@@ -15,6 +15,18 @@ import ReactPlayer from "react-player";
 import StarIcon from "@material-ui/icons/Star";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  headline: {
+    display: "flex",
+    justifyContent: "space-between",
+    marginLeft: "25px",
+    [theme.breakpoints.only("xs")]: {
+      display: "grid",
+      fontSize: "1.3rem",
+    },
+  },
+}));
 
 const Overview = ({
   movieDetails,
@@ -24,7 +36,7 @@ const Overview = ({
   video,
   cert,
 }) => {
-  console.log(video);
+  const classes = useStyles();
   const { posterUrl } = useGlobalContext();
   const {
     poster_path,
@@ -147,15 +159,7 @@ const Overview = ({
           />
         </Grid>
         <Grid item xs={12} md={8} style={{ alignSelf: "start" }}>
-          <Typography
-            variant="h4"
-            component="h1"
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginLeft: "25px",
-            }}
-          >
+          <Typography variant="h4" component="h1" className={classes.headline}>
             {title}
             <Typography
               variant="h4"
