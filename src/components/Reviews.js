@@ -84,11 +84,6 @@ const Reviews = () => {
                   <Modal
                     open={isReviewOpen}
                     onClose={() => setIsReviewOpen(false)}
-                    style={{
-                      backgroundColor: "white",
-                      margin: "50px",
-                      borderRadius: "5px",
-                    }}
                   >
                     <SingleReview id={currentId} />
                   </Modal>

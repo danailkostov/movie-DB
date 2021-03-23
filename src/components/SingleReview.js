@@ -30,7 +30,8 @@ const SingleReview = ({ id }) => {
         left: "50%",
         transform: "translate(-50%, -50%)",
         overflow: "scroll",
-        height: "100%",
+        height: "40%",
+        backgroundColor: "white",
       }}
     >
       <Typography variant="h6">A review by {author}</Typography>

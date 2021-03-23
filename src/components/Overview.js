@@ -348,15 +348,7 @@ const Overview = ({
       >
         <ReactPlayer url={video} width="100%" height="100%" controls />
       </Modal>
-      <Modal
-        open={isReviewOpen}
-        onClose={() => setIsReviewOpen(false)}
-        style={{
-          backgroundColor: "white",
-          margin: "50px",
-          borderRadius: "5px",
-        }}
-      >
+      <Modal open={isReviewOpen} onClose={() => setIsReviewOpen(false)}>
         <SingleReview id={reviews[0].id} />
       </Modal>
     </>

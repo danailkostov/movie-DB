@@ -8,7 +8,7 @@ import AllResults from "./components/AllResults";
 import GenresQuery from "./components/GenresQuery";
 import Reviews from "./components/Reviews";
 import SingleReview from "./components/SingleReview";
-import Staff from "./components/Staff";
+import MovieStaff from "./components/MovieStaff";
 import AllRecommend from "./components/AllRecommend";
 
 function App() {
@@ -25,6 +25,9 @@ function App() {
           </Route>
           <Route path="/movie/:id-:title/reviews">
             <Reviews />
+          </Route>
+          <Route path="/movie/:id-:title/cast">
+            <MovieStaff />
           </Route>
           <Route path="/movie/:id">
             <SingleMovie />
@@ -43,9 +46,6 @@ function App() {
           </Route>
           <Route path="/review/:id">
             <SingleReview />
-          </Route>
-          <Route path="/staff">
-            <Staff />
           </Route>
           <Route path="/recommendations">
             <AllRecommend />

@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Divider, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
-const Cast = ({ movieCast }) => {
+const Cast = ({ movieCast, id, title }) => {
   const posterUrl = "https://image.tmdb.org/t/p/w185";
 
   return (
@@ -50,7 +50,7 @@ const Cast = ({ movieCast }) => {
       <Grid item xs={12}>
         <Typography variant="body1" component="p" align="right">
           <Link
-            to={"/staff"}
+            to={`/movie/${id}-${title}/cast`}
             style={{ color: "#45A29E", textDecoration: "none" }}
           >
             Full Cast & Crew{" "}
