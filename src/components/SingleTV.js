@@ -46,14 +46,14 @@ const SingleTV = () => {
       {/* Overview Section */}
       <OverviewTV
         tvDetails={tvDetails}
-        tvReviews={tvReviews === '[]' ? false: tvReviews}
+        tvReviews={tvReviews === "[]" ? false : tvReviews}
         tvCert={tvCert}
         tvVideo={tvVideo}
       />
       {/* Cast Section */}
-      <CastTV tvCast={tvCast} />
+      {tvCast.length > 0 && <CastTV tvCast={tvCast} />}
       {/* Recommended Section */}
-      <RecommendedTV tvRec={tvRec} />
+      {tvRec.length > 0 && <RecommendedTV tvRec={tvRec} />}
     </Container>
   );
 };

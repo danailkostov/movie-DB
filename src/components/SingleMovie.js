@@ -61,9 +61,9 @@ const SingleMovie = () => {
         cert={cert}
       />
       {/* Cast Section*/}
-      <Cast movieCast={movieCast} />
+      {movieCast.length > 0 && <Cast movieCast={movieCast} />}
       {/* Recommended Section */}
-      <Recommended recMovies={recMovies} />
+      {recMovies.length > 0 && <Recommended recMovies={recMovies} />}
     </Container>
   );
 };

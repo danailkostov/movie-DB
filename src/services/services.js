@@ -155,7 +155,7 @@ const fetchCertification = async (id) => {
   const response = await fetch(certUrl);
   const certs = await response.json();
   const certUS = certs.results.filter((cert) => cert.iso_3166_1 === "US");
-  return certUS[0].release_dates[0].certification;
+  return certUS.length > 0 ? certUS[0].release_dates[0].certification : null;
 };
 
 const fetchTVDetails = async (id) => {
@@ -276,7 +276,19 @@ const fetchKnownFor = async (id) => {
   const sortCastMovies = castCredits
     .sort((a, b) => (a.vote_count < b.vote_count ? 1 : -1))
     .slice(0, 6);
-  const sortCrewMovies = crewCredits
+
+  const sortCrewMovies = Array.from(new Set(crewCredits.map((s) => s.id)))
+    .map((id) => {
+      return {
+        id: id,
+        name:
+          crewCredits.find((s) => s.id === id).name ||
+          crewCredits.find((s) => s.id === id).title,
+        vote_count: crewCredits.find((s) => s.id === id).vote_count,
+        media_type: crewCredits.find((s) => s.id === id).media_type,
+        poster_path: crewCredits.find((s) => s.id === id).poster_path,
+      };
+    })
     .sort((a, b) => (a.vote_count < b.vote_count ? 1 : -1))
     .slice(0, 6);
 
@@ -285,6 +297,13 @@ const fetchKnownFor = async (id) => {
     sortCrewMovies,
     sortProductionsByYear,
   };
+};
+
+const fetchSingleReview = async (id) => {
+  const reviewUrl = `${mainUrl}/review/${id}?${apiKey}`;
+  const response = await fetch(reviewUrl);
+  const review = await response.json();
+  return review;
 };
 
 export {
@@ -314,4 +333,5 @@ export {
   fetchRecTV,
   fetchPerson,
   fetchKnownFor,
+  fetchSingleReview,
 };

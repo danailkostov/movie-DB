@@ -1,11 +1,17 @@
 import React, { useCallback, useState } from "react";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { Typography, TextField, Button, Divider } from "@material-ui/core";
+import { Typography, TextField, Divider } from "@material-ui/core";
 import { fetchSearch } from "../../services/services";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { createFilterOptions } from "@material-ui/lab/Autocomplete";
 
 const Autosuggest = ({ value, setValue }) => {
   const [options, setOptions] = useState([]);
+
+  const filterOptions = createFilterOptions({
+    ignoreCase: true,
+    stringify: (option) => (option.title ? option.title : option.name),
+  });
 
   const debounce = (func) => {
     let timer;
@@ -23,10 +29,6 @@ const Autosuggest = ({ value, setValue }) => {
     const data = await fetchSearch(event.target.value, 1);
     if (event.target.value.length > 0) {
       setOptions(await fetchSearch(event.target.value, 1));
-      setOptions((state) => [
-        ...state,
-        { title: "All Results", name: "All Results", media_type: "All" },
-      ]);
     } else {
       setOptions([]);
     }
@@ -45,15 +47,7 @@ const Autosuggest = ({ value, setValue }) => {
   return (
     <>
       <Autocomplete
-        filterOptions={(options, state) =>
-          options.filter((opt) =>
-            opt.title
-              ? opt.title.includes(state.inputValue) ||
-                opt.title === "All Results"
-              : opt.name.includes(state.inputValue) ||
-                opt.name === "All Results"
-          )
-        }
+        filterOptions={filterOptions}
         freeSolo
         options={options}
         renderOption={(option) => (
@@ -64,7 +58,9 @@ const Autosuggest = ({ value, setValue }) => {
             <Typography style={{ width: "100%" }} variant="subtitle2">
               {option.title ? option.title : option.name}
             </Typography>
-            <Typography variant="body2" gutterBottom>{option.media_type}</Typography>
+            <Typography variant="body2" gutterBottom>
+              {option.media_type}
+            </Typography>
             <Divider />
           </Typography>
         )}

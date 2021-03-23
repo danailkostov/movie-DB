@@ -16,12 +16,15 @@ function App() {
     <Router>
       <div
         className="App"
-        style={{ backgroundColor: "#1f2833", color: "#45A29E" }}
+        style={{ backgroundColor: "#1f2833", color: "#45A29E", height: "100%" }}
       >
         <Header />
         <Switch>
           <Route exact path="/">
             <Home />
+          </Route>
+          <Route path="/movie/:id-:title/reviews">
+            <Reviews />
           </Route>
           <Route path="/movie/:id">
             <SingleMovie />
@@ -37,9 +40,6 @@ function App() {
           </Route>
           <Route path="/search/genres/:type">
             <GenresQuery />
-          </Route>
-          <Route path="/reviews">
-            <Reviews />
           </Route>
           <Route path="/review/:id">
             <SingleReview />

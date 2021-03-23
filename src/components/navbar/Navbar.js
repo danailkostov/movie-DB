@@ -1,6 +1,5 @@
 import { AppBar, Button, IconButton, Toolbar, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import SearchIcon from "@material-ui/icons/Search";
 import React, { useState } from "react";
 import { useGlobalContext } from "../../utils/context";
 import Autosuggest from "./Autosuggest";
@@ -13,6 +12,9 @@ const useStyles = makeStyles((theme) => ({
     height: "50px",
     [theme.breakpoints.only("xs")]: {
       gridColumn: "1/3",
+    },
+    [theme.breakpoints.up("sm")]: {
+      width: "70%",
     },
   },
   input: {
@@ -82,14 +84,6 @@ const Navbar = () => {
           onSubmit={handleSubmit}
         >
           <Autosuggest value={value} setValue={setValue} />
-          {/* <IconButton
-            type="submit"
-            className={classes.iconButton}
-            aria-label="search"
-            onClick={handleSubmit}
-          >
-            <SearchIcon />
-          </IconButton> */}
         </Paper>
         <Button color="inherit" className={classes.signBtn}>
           Sign in

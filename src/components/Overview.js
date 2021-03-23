@@ -16,10 +16,11 @@ import StarIcon from "@material-ui/icons/Star";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+import noImg from "../images/no-cover.png";
 const useStyles = makeStyles((theme) => ({
   headline: {
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     marginLeft: "25px",
     [theme.breakpoints.only("xs")]: {
       display: "grid",
@@ -52,6 +53,7 @@ const Overview = ({
     production_companies,
     revenue,
     status,
+    id,
   } = movieDetails;
   const [value, setValue] = useState(0);
   const [open, setOpen] = useState(false);
@@ -76,7 +78,7 @@ const Overview = ({
         style={{ color: "#45A29E", textDecoration: "none" }}
       >
         {" "}
-        {item.name}{" "}
+        {item.name} |
       </Link>
     ) : (
       <Link
@@ -153,7 +155,7 @@ const Overview = ({
             </Button>
           )}
           <img
-            src={`${posterUrl}${poster_path}`}
+            src={poster_path ? `${posterUrl}${poster_path}` : noImg}
             alt={title}
             style={{ width: "100%", height: "100%" }}
           />
@@ -185,7 +187,9 @@ const Overview = ({
             gutterBottom
             style={{ marginLeft: "25px" }}
           >
-            {premiereDate} | {allGenres} | {duration} | {cert}
+            {premiereDate ? `${premiereDate} |` : null}{" "}
+            {allGenres.length > 0 ? allGenres : null}{" "}
+            {runtime > 0 ? `${duration} |` : null} {cert}
           </Typography>
           <Tabs
             value={value}
@@ -214,14 +218,14 @@ const Overview = ({
               {directors.map((director, index) =>
                 index === directors.length - 1 ? (
                   <Link
-                    to={"/person/" + director.name + "/" + director.id}
+                    to={"/person/" + director.id}
                     style={{ textDecoration: "none", color: "#45A29E" }}
                   >
                     {director.name}
                   </Link>
                 ) : (
                   <Link
-                    to={"/person/" + director.name + "/" + director.id}
+                    to={"/person/" + director.id}
                     style={{ textDecoration: "none", color: "#45A29E" }}
                   >
                     {director.name},{" "}
@@ -241,14 +245,14 @@ const Overview = ({
               {writers.map((writer, index) =>
                 index === writers.length - 1 ? (
                   <Link
-                    to={"/person/" + writer.name + "/" + writer.id}
+                    to={"/person/" + writer.id}
                     style={{ textDecoration: "none", color: "#45A29E" }}
                   >
                     {writer.name}
                   </Link>
                 ) : (
                   <Link
-                    to={"/person/" + writer.name + "/" + writer.id}
+                    to={"/person/" + writer.id}
                     style={{ textDecoration: "none", color: "#45A29E" }}
                   >
                     {writer.name},{" "}
@@ -279,7 +283,7 @@ const Overview = ({
                 </Typography>
                 <Typography variant="h6" component="p">
                   <Link
-                    to={"/reviews"}
+                    to={`/movie/${id}-${title}/reviews`}
                     style={{ color: "#45A29E", textDecoration: "none" }}
                   >
                     All Reviews
@@ -300,17 +304,22 @@ const Overview = ({
             <Typography variant="h6" gutterBottom>
               Languages:
               <Typography variant="body2">
-                {spoken_languages.map((lang) => lang.name)}
+                {spoken_languages.length > 0
+                  ? spoken_languages.map((lang) => lang.name)
+                  : "-"}
               </Typography>
             </Typography>
             <Typography variant="h6" gutterBottom>
               Production Companies:
               <Typography variant="body2">
-                {production_companies.map((comp, index) =>
-                  index === production_companies.length - 1
-                    ? comp.name
-                    : `${comp.name}, `
-                )}
+                {production_companies.length > 0
+                  ? production_companies.map((comp, index) =>
+                      index === production_companies.length - 1
+                        ? comp.name
+                        : `${comp.name}, `
+                    )
+                  : "-"}
+                {}
               </Typography>
             </Typography>
             <Typography variant="h6" gutterBottom>

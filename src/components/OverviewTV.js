@@ -15,9 +15,21 @@ import ReactPlayer from "react-player";
 import StarIcon from "@material-ui/icons/Star";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  headline: {
+    display: "flex",
+    justifyContent: "space-around",
+    marginLeft: "25px",
+    [theme.breakpoints.only("xs")]: {
+      display: "grid",
+      fontSize: "1.3rem",
+    },
+  },
+}));
 
 const OverviewTV = ({ tvDetails, tvReviews, tvCert, tvVideo }) => {
-  console.log(tvReviews);
+  const classes = useStyles();
   const { posterUrl } = useGlobalContext();
   const [value, setValue] = useState(0);
   const [open, setOpen] = useState(false);
@@ -137,15 +149,7 @@ const OverviewTV = ({ tvDetails, tvReviews, tvCert, tvVideo }) => {
           />
         </Grid>
         <Grid item xs={12} md={8} style={{ alignSelf: "start" }}>
-          <Typography
-            variant="h4"
-            component="h1"
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginLeft: "25px",
-            }}
-          >
+          <Typography variant="h4" component="h1" className={classes.headline}>
             {name}
             <Typography
               variant="h4"
@@ -202,14 +206,14 @@ const OverviewTV = ({ tvDetails, tvReviews, tvCert, tvVideo }) => {
                   {created_by.map((creator, index) =>
                     index === created_by.length - 1 ? (
                       <Link
-                        to={"/person/" + creator.name + "/" + creator.id}
+                        to={"/person/" + creator.id}
                         style={{ textDecoration: "none", color: "#45A29E" }}
                       >
                         {creator.name}
                       </Link>
                     ) : (
                       <Link
-                        to={"/person/" + creator.name + "/" + creator.id}
+                        to={"/person/" + creator.id}
                         style={{ textDecoration: "none", color: "#45A29E" }}
                       >
                         {creator.name},{" "}
