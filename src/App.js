@@ -10,6 +10,7 @@ import Reviews from "./components/Reviews";
 import SingleReview from "./components/SingleReview";
 import MovieStaff from "./components/MovieStaff";
 import AllRecommend from "./components/AllRecommend";
+import TvStaff from "./components/TvStaff";
 
 function App() {
   return (
@@ -31,6 +32,9 @@ function App() {
           </Route>
           <Route path="/movie/:id">
             <SingleMovie />
+          </Route>
+          <Route path="/tv/:id-:title/cast">
+            <TvStaff />
           </Route>
           <Route path="/tv/:id">
             <SingleTV />

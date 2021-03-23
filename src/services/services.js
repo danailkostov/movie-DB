@@ -185,10 +185,17 @@ const fetchTVCerts = async (id) => {
 };
 
 const fetchTVCast = async (id) => {
-  const castUrl = `${mainUrl}/tv/${id}/credits?${apiKey}`;
+  // const castUrl = `${mainUrl}/tv/${id}/credits?${apiKey}`;
+  const castUrl = `${mainUrl}/tv/${id}/aggregate_credits?${apiKey}`;
   const response = await fetch(castUrl);
   const cast = await response.json();
   return cast.cast;
+};
+const fetchTVCrew = async (id) => {
+  const castUrl = `${mainUrl}/tv/${id}/aggregate_credits?${apiKey}`;
+  const response = await fetch(castUrl);
+  const cast = await response.json();
+  return cast.crew;
 };
 
 const fetchRecTV = async (id) => {
@@ -334,4 +341,5 @@ export {
   fetchPerson,
   fetchKnownFor,
   fetchSingleReview,
+  fetchTVCrew,
 };

@@ -51,7 +51,9 @@ const SingleTV = () => {
         tvVideo={tvVideo}
       />
       {/* Cast Section */}
-      {tvCast.length > 0 && <CastTV tvCast={tvCast} />}
+      {tvCast.length > 0 && (
+        <CastTV tvCast={tvCast} id={id} title={tvDetails.name} />
+      )}
       {/* Recommended Section */}
       {tvRec.length > 0 && <RecommendedTV tvRec={tvRec} />}
     </Container>
