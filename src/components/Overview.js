@@ -17,6 +17,7 @@ import moment from "moment";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import noImg from "../images/no-cover.png";
+import SingleReview from "../components/SingleReview";
 const useStyles = makeStyles((theme) => ({
   headline: {
     display: "flex",
@@ -57,6 +58,7 @@ const Overview = ({
   } = movieDetails;
   const [value, setValue] = useState(0);
   const [open, setOpen] = useState(false);
+  const [isReviewOpen, setIsReviewOpen] = useState(false);
   const currency = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
@@ -274,12 +276,12 @@ const Overview = ({
                 </Typography>
                 <Typography gutterBottom paragraph>
                   {reviews[0].content.substr(0, 1000)}...
-                  <Link
-                    to={"/review/" + reviews[0].id}
+                  <Button
+                    onClick={() => setIsReviewOpen(true)}
                     style={{ color: "white" }}
                   >
                     Read more
-                  </Link>
+                  </Button>
                 </Typography>
                 <Typography variant="h6" component="p">
                   <Link
@@ -345,6 +347,17 @@ const Overview = ({
         style={{ margin: "50px", border: "none" }}
       >
         <ReactPlayer url={video} width="100%" height="100%" controls />
+      </Modal>
+      <Modal
+        open={isReviewOpen}
+        onClose={() => setIsReviewOpen(false)}
+        style={{
+          backgroundColor: "white",
+          margin: "50px",
+          borderRadius: "5px",
+        }}
+      >
+        <SingleReview id={reviews[0].id} />
       </Modal>
     </>
   );

@@ -1,11 +1,9 @@
 import { Container, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
 import { fetchSingleReview } from "../services/services";
 import moment from "moment";
 
-const SingleReview = () => {
-  const { id } = useParams();
+const SingleReview = ({ id }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [review, setReview] = useState("");
 
@@ -24,7 +22,17 @@ const SingleReview = () => {
   const { author, content, created_at } = review;
   const reviewDate = moment(created_at, "YYYY-MM-DD").format("MMMM Do[,] YYYY");
   return (
-    <Container maxWidth="md">
+    <Container
+      maxWidth="md"
+      style={{
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        overflow: "scroll",
+        height: "100%",
+      }}
+    >
       <Typography variant="h6">A review by {author}</Typography>
       <Typography variant="body2" gutterBottom paragraph>
         Written by <span style={{ fontWeight: "500" }}>{author}</span> on{" "}
