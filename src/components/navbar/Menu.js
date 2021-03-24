@@ -65,19 +65,31 @@ const Menu = () => {
           />
         </ListItem>
         <ListItem button>
-          <ListItemText primary={<Link to='/movies/top-rated'>Top Rated Movies</Link>} inset />
+          <ListItemText
+            primary={<Link to="/movies/top-rated">Top Rated Movies</Link>}
+            inset
+          />
         </ListItem>
         <ListItem button>
-          <ListItemText primary="Most Popular Movies" inset />
+          <ListItemText
+            primary={<Link to="/movies/popular">Most Popular Movies</Link>}
+            inset
+          />
         </ListItem>
         <ListItem button>
           <ListItemText primary="Browse Movies By Genre" inset />
         </ListItem>
         <ListItem button>
-          <ListItemText primary="In Theaters" inset />
+          <ListItemText
+            primary={<Link to="/movies/now-playing">In Theaters</Link>}
+            inset
+          />
         </ListItem>
         <ListItem button>
-          <ListItemText primary="Coming Soon" inset />
+          <ListItemText
+            primary={<Link to="/movies/coming-soon">Coming Soon</Link>}
+            inset
+          />
         </ListItem>
       </List>
       <List>

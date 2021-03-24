@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
   fetchSearch,
-  fetchPopular,
+  fetchNowPlayingMovies,
   fetchGenres,
-  fetchPopularTV,
+  fetchNowPlayingTV,
   fetchGenresTV,
   fetchTrendingDay,
   fetchTrendingWeek,
@@ -39,15 +39,15 @@ const AppProvider = ({ children }) => {
   useEffect(() => {
     const fetchAPI = async () => {
       setIsLoading(true);
-      setNowItems(await fetchPopular());
+      setNowItems(await fetchNowPlayingMovies(searchPage));
       setGenres(await fetchGenres());
-      setTvs(await fetchPopularTV());
+      setTvs(await fetchNowPlayingTV());
       setTvGenres(await fetchGenresTV());
       setTrendingDayList(await fetchTrendingDay());
       setTrendingWeekList(await fetchTrendingWeek());
       setTopRatedMovies(await fetchTopRatedMovies(searchPage));
       setTopRatedTVs(await fetchTopRatedTVs());
-      setUpcomingList(await fetchUpcoming());
+      setUpcomingList(await fetchUpcoming(searchPage));
       setIsLoading(false);
     };
     fetchAPI();
