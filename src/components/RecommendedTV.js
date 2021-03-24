@@ -54,7 +54,7 @@ const RecommendedTV = ({ tvRec }) => {
           </Grid>
         ) : null;
       })}
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <Typography align="right" variant="body1" component="p">
           <Link
             to={"/recommendations"}
@@ -63,7 +63,7 @@ const RecommendedTV = ({ tvRec }) => {
             All Recomendations
           </Link>
         </Typography>
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 };

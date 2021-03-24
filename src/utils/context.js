@@ -45,7 +45,7 @@ const AppProvider = ({ children }) => {
       setTvGenres(await fetchGenresTV());
       setTrendingDayList(await fetchTrendingDay());
       setTrendingWeekList(await fetchTrendingWeek());
-      setTopRatedMovies(await fetchTopRatedMovies());
+      setTopRatedMovies(await fetchTopRatedMovies(searchPage));
       setTopRatedTVs(await fetchTopRatedTVs());
       setUpcomingList(await fetchUpcoming());
       setIsLoading(false);
@@ -84,7 +84,7 @@ const AppProvider = ({ children }) => {
         topRatedMovies,
         topRatedTVs,
         upcomingList,
-        setSearchItems
+        setSearchItems,
       }}
     >
       {children}

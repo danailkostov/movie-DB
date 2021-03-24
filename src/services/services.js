@@ -11,7 +11,7 @@ const tvVideosUrl = `${mainUrl}/tv/`;
 const tvGenresUrl = `${mainUrl}/genre/tv/list?${apiKey}&language=en-US`;
 const trendingDayUrl = `${mainUrl}/trending/all/day?${apiKey}&page=1`;
 const trendingWeekUrl = `${mainUrl}/trending/all/week?${apiKey}&page=1`;
-const topRatedMoviesUrl = `${mainUrl}/movie/top_rated?${apiKey}&language=en-US&page=1`;
+// const topRatedMoviesUrl = `${mainUrl}/movie/top_rated?${apiKey}&language=en-US&page=1`;
 const topRatedTVsUrl = `${mainUrl}/tv/top_rated?${apiKey}&language=en-US&page=1`;
 const upcomingUrl = `${mainUrl}/movie/upcoming?${apiKey}&language=en-US&page=1`;
 
@@ -87,13 +87,23 @@ const fetchTrendingWeek = async () => {
   );
 };
 
-const fetchTopRatedMovies = async () => {
+const fetchTopRatedMovies = async (page) => {
+  const topRatedMoviesUrl = `${mainUrl}/movie/top_rated?${apiKey}&language=en-US&page=${
+    page + 1
+  }`;
   const response = await fetch(topRatedMoviesUrl);
   const moviesList = await response.json();
   return moviesList.results.sort((a, b) =>
     a.vote_average < b.vote_average ? 1 : -1
   );
 };
+const fetchTopRatedMoviesPages = async () => {
+  const topRatedMoviesUrl = `${mainUrl}/movie/top_rated?${apiKey}&language=en-US&page=1`;
+  const response = await fetch(topRatedMoviesUrl);
+  const moviesList = await response.json();
+  return moviesList.total_pages;
+};
+
 const fetchTopRatedTVs = async () => {
   const response = await fetch(topRatedTVsUrl);
   const tvsList = await response.json();
@@ -185,7 +195,6 @@ const fetchTVCerts = async (id) => {
 };
 
 const fetchTVCast = async (id) => {
-  // const castUrl = `${mainUrl}/tv/${id}/credits?${apiKey}`;
   const castUrl = `${mainUrl}/tv/${id}/aggregate_credits?${apiKey}`;
   const response = await fetch(castUrl);
   const cast = await response.json();
@@ -342,4 +351,5 @@ export {
   fetchKnownFor,
   fetchSingleReview,
   fetchTVCrew,
+  fetchTopRatedMoviesPages,
 };

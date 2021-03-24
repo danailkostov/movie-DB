@@ -11,6 +11,7 @@ import SingleReview from "./components/SingleReview";
 import MovieStaff from "./components/MovieStaff";
 import AllRecommend from "./components/AllRecommend";
 import TvStaff from "./components/TvStaff";
+import FilterMovies from "./components/FilterMovies";
 
 function App() {
   return (
@@ -53,6 +54,9 @@ function App() {
           </Route>
           <Route path="/recommendations">
             <AllRecommend />
+          </Route>
+          <Route path="/movies/:category">
+            <FilterMovies />
           </Route>
         </Switch>
       </div>
