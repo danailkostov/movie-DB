@@ -20,9 +20,12 @@ const fetchSearch = async (searchQuery, searchPage) => {
   return searchListArray.results;
 };
 
-const fetchNowPlayingMovies = async (page) => {
+const fetchNowPlayingMovies = async (page, sort) => {
+  const ratingsUrl = `${mainUrl}/discover/movie?${apiKey}&region=US&sort_by=vote_average.desc&page=${page}&release_date.gte=2021-02-10&release_date.lte=2021-03-30&with_release_type=%202%20%7C%203`;
   const playingNowUrl = `${mainUrl}/movie/now_playing?${apiKey}&page=${page}&region=US`;
-  const response = await fetch(playingNowUrl);
+  const response = await fetch(
+    sort === "top-rated" ? ratingsUrl : playingNowUrl
+  );
   const nowList = await response.json();
   return nowList.results;
 };

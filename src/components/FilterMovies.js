@@ -28,6 +28,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import { makeStyles } from "@material-ui/core/styles";
 import moment from "moment";
 import { Link, useParams } from "react-router-dom";
+import noPoster from "../images/no-cover.png";
 
 const useStyles = makeStyles(() => ({
   ul: {
@@ -46,9 +47,11 @@ const FilterMovies = () => {
   const [movies, setMovies] = useState("");
   const [pagesCount, setPagesCount] = useState(0);
   const [page, setPage] = useState(1);
-  const [sort, setSort] = useState(category);
+  const [sort, setSort] = useState(
+    category === "top-rated" ? "top-rated" : "popular"
+  );
   const [title, setTitle] = useState("");
-  console.log(movies);
+  const [fetchType, setFetchType] = useState("");
 
   const handleSort = (event) => {
     setSort(event.target.value);
@@ -57,29 +60,28 @@ const FilterMovies = () => {
   useEffect(() => {
     const fetchAPI = async () => {
       setIsLoading(true);
+      setSort(category === "top-rated" ? "top-rated" : "popular");
       switch (category) {
         case "top-rated":
           setMovies(await fetchTopRatedMovies(page - 1));
           setPagesCount(await fetchTopRatedMoviesPages());
-          setSort("top-rated");
           setTitle("Top Rated Movies");
           break;
         case "popular":
           setMovies(await fetchPopularMovies(page - 1));
           setPagesCount(await fetchPopularMoviesPages());
-          setSort("popular");
           setTitle("Popular Movies");
           break;
         case "now-playing":
-          setMovies(await fetchNowPlayingMovies(page));
+          setMovies(
+            await fetchNowPlayingMovies(page, fetchType ? fetchType : "")
+          );
           setPagesCount(await fetchNowPlayingMoviesPages());
-          setSort("popular");
           setTitle("Now Playing Movies");
           break;
         case "coming-soon":
           setMovies(await fetchUpcoming(page));
           setPagesCount(await fetchUpcomingPages());
-          setSort("popular");
           setTitle("Upcoming Movies");
           break;
         default:
@@ -88,10 +90,13 @@ const FilterMovies = () => {
       setIsLoading(false);
     };
     fetchAPI();
-  }, [page, category]);
+  }, [page, category, fetchType]);
 
   const handleChange = (event, value) => {
     setPage(value);
+  };
+  const handleClick = () => {
+    setFetchType(sort);
   };
 
   if (isLoading) {
@@ -176,7 +181,7 @@ const FilterMovies = () => {
               backgroundColor: "#0B0C10",
             }}
           >
-            <Button fullWidth style={{ color: "white" }}>
+            <Button fullWidth style={{ color: "white" }} onClick={handleClick}>
               Search
             </Button>
           </Paper>
@@ -202,7 +207,9 @@ const FilterMovies = () => {
                 >
                   <Link to={`/movie/${id}`}>
                     <img
-                      src={`${posterUrl}${poster_path}`}
+                      src={
+                        poster_path ? `${posterUrl}${poster_path}` : noPoster
+                      }
                       alt="#"
                       style={{
                         width: "100%",
