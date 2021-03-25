@@ -21,14 +21,14 @@ const fetchSearch = async (searchQuery, searchPage) => {
 };
 
 const fetchNowPlayingMovies = async (page) => {
-  const playingNowUrl = `${mainUrl}/movie/now_playing?${apiKey}&language=en-US&page=${page}`;
+  const playingNowUrl = `${mainUrl}/movie/now_playing?${apiKey}&page=${page}&region=US`;
   const response = await fetch(playingNowUrl);
   const nowList = await response.json();
-  return nowList.results.sort((a, b) => (a.popularity < b.popularity ? 1 : -1));
+  return nowList.results;
 };
 
 const fetchNowPlayingMoviesPages = async () => {
-  const url = `${mainUrl}/movie/now_playing?${apiKey}&language=en-US&page=1`;
+  const url = `${mainUrl}/movie/now_playing?${apiKey}&page=1&region=US`;
   const response = await fetch(url);
   const moviesList = await response.json();
   return moviesList.total_pages;
@@ -347,6 +347,14 @@ const fetchSingleReview = async (id) => {
   return review;
 };
 
+const fetchSortedMovies = async (sort) => {
+  const date = "&release_date.gte=2021-02-10&release_date.lte=2021-03-30";
+  const url = `${mainUrl}/discover/movie?${apiKey}&region=US&sort_by=${sort}.desc${date}&with_release_type=%202%20%7C%203`;
+  const response = await fetch(url);
+  const movieList = await response.json();
+  return movieList.results;
+};
+
 export {
   fetchSearch,
   fetchNowPlayingMovies,
@@ -381,4 +389,5 @@ export {
   fetchPopularMovies,
   fetchNowPlayingMoviesPages,
   fetchUpcomingPages,
+  fetchSortedMovies,
 };

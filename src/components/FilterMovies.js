@@ -46,10 +46,12 @@ const FilterMovies = () => {
   const [movies, setMovies] = useState("");
   const [pagesCount, setPagesCount] = useState(0);
   const [page, setPage] = useState(1);
-  const [age, setAge] = React.useState("popularity");
+  const [sort, setSort] = useState(category);
+  const [title, setTitle] = useState("");
+  console.log(movies);
 
   const handleSort = (event) => {
-    setAge(event.target.value);
+    setSort(event.target.value);
   };
 
   useEffect(() => {
@@ -59,18 +61,26 @@ const FilterMovies = () => {
         case "top-rated":
           setMovies(await fetchTopRatedMovies(page - 1));
           setPagesCount(await fetchTopRatedMoviesPages());
+          setSort("top-rated");
+          setTitle("Top Rated Movies");
           break;
         case "popular":
           setMovies(await fetchPopularMovies(page - 1));
           setPagesCount(await fetchPopularMoviesPages());
+          setSort("popular");
+          setTitle("Popular Movies");
           break;
         case "now-playing":
           setMovies(await fetchNowPlayingMovies(page));
           setPagesCount(await fetchNowPlayingMoviesPages());
+          setSort("popular");
+          setTitle("Now Playing Movies");
           break;
         case "coming-soon":
           setMovies(await fetchUpcoming(page));
           setPagesCount(await fetchUpcomingPages());
+          setSort("popular");
+          setTitle("Upcoming Movies");
           break;
         default:
           break;
@@ -96,7 +106,7 @@ const FilterMovies = () => {
       >
         <Grid item xs={12}>
           <Typography variant="h5" style={{ paddingLeft: "15px" }}>
-            Top Rated Movies
+            {title}
           </Typography>
         </Grid>
         <Grid item xs={12} md={3}>
@@ -121,7 +131,7 @@ const FilterMovies = () => {
               <FormControl style={{ width: "100%" }}>
                 <Typography gutterBottom>Sorts Results By</Typography>
                 <Select
-                  value={age}
+                  value={sort}
                   onChange={handleSort}
                   style={{
                     backgroundColor: "#1f2833",
@@ -131,8 +141,8 @@ const FilterMovies = () => {
                     color: "white",
                   }}
                 >
-                  <MenuItem value={"popularity"}>Popularity</MenuItem>
-                  <MenuItem value={"rating"}>Rating</MenuItem>
+                  <MenuItem value={"popular"}>Popularity</MenuItem>
+                  <MenuItem value={"top-rated"}>Rating</MenuItem>
                   <MenuItem value={"releaseDate"}>Release Date</MenuItem>
                 </Select>
               </FormControl>
