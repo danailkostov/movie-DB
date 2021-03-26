@@ -18,7 +18,6 @@ const posterUrl = "https://image.tmdb.org/t/p/w342";
 const backdropUrl = "https://image.tmdb.org/t/p/w780";
 
 const AppProvider = ({ children }) => {
-  //date maximum 2021-02-27  minimum - 2021-01-10
   const [searchQuery, setSearchQuery] = useState("");
   const [searchPage, setSearchPage] = useState(1);
   const [searchItems, setSearchItems] = useState([]);
@@ -45,9 +44,11 @@ const AppProvider = ({ children }) => {
       setTvGenres(await fetchGenresTV());
       setTrendingDayList(await fetchTrendingDay());
       setTrendingWeekList(await fetchTrendingWeek());
-      setTopRatedMovies(await fetchTopRatedMovies(searchPage));
+      setTopRatedMovies(
+        await fetchTopRatedMovies(searchPage - 1, "vote_average")
+      );
       setTopRatedTVs(await fetchTopRatedTVs());
-      setUpcomingList(await fetchUpcoming(searchPage));
+      setUpcomingList(await fetchUpcoming(searchPage, "popularity.desc"));
       setIsLoading(false);
     };
     fetchAPI();

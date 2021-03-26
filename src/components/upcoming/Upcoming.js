@@ -9,6 +9,7 @@ import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import Modal from "@material-ui/core/Modal";
 import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
+import noImg from "../../images/no-cover.png";
 
 const useStyles = makeStyles((theme) => ({
   slide: {
@@ -158,7 +159,7 @@ const Upcoming = () => {
                   <PlayCircleOutlineIcon style={{ fontSize: "70px" }} />
                 </Button>
                 <img
-                  src={`${posterUrl}${backdrop_path}`}
+                  src={backdrop_path ? `${posterUrl}${backdrop_path}` : noImg}
                   alt={title}
                   style={{ width: "100%", height: "100%", margin: "0 auto" }}
                 />

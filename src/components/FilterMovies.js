@@ -17,7 +17,6 @@ import React, { useEffect, useState } from "react";
 import {
   fetchTopRatedMovies,
   fetchTopRatedMoviesPages,
-  fetchPopularMoviesPages,
   fetchPopularMovies,
   fetchNowPlayingMovies,
   fetchNowPlayingMoviesPages,
@@ -47,9 +46,7 @@ const FilterMovies = () => {
   const [movies, setMovies] = useState("");
   const [pagesCount, setPagesCount] = useState(0);
   const [page, setPage] = useState(1);
-  const [sort, setSort] = useState(
-    category === "vote_average" ? "vote_average" : "popularity"
-  );
+  const [sort, setSort] = useState("");
   const [title, setTitle] = useState("");
   const [fetchType, setFetchType] = useState("");
 
@@ -60,34 +57,51 @@ const FilterMovies = () => {
   useEffect(() => {
     const fetchAPI = async () => {
       setIsLoading(true);
-      setSort(category === "vote_average" ? "vote_average" : "popularity");
       switch (category) {
         case "top-rated":
-          setMovies(await fetchTopRatedMovies(page - 1, fetchType ? fetchType : 'vote_average'));
+          setMovies(
+            await fetchTopRatedMovies(
+              page - 1,
+              fetchType ? fetchType : "vote_average"
+            )
+          );
           setPagesCount(await fetchTopRatedMoviesPages());
           setTitle("Top Rated Movies");
           break;
         case "popular":
-          setMovies(await fetchPopularMovies(page - 1, fetchType ? fetchType : 'popularity'));
-          // setPagesCount(await fetchPopularMoviesPages());
+          setMovies(
+            await fetchPopularMovies(
+              page - 1,
+              fetchType ? fetchType : "popularity"
+            )
+          );
           setPagesCount(3);
           setTitle("Popular Movies");
           break;
         case "now-playing":
           setMovies(
-            await fetchNowPlayingMovies(page, fetchType ? fetchType : "popularity")
+            await fetchNowPlayingMovies(
+              page,
+              fetchType ? fetchType : "popularity"
+            )
           );
           setPagesCount(await fetchNowPlayingMoviesPages());
           setTitle("Now Playing Movies");
           break;
         case "coming-soon":
-          setMovies(await fetchUpcoming(page));
+          setMovies(
+            await fetchUpcoming(
+              page,
+              fetchType ? fetchType : "release_date.asc"
+            )
+          );
           setPagesCount(await fetchUpcomingPages());
           setTitle("Upcoming Movies");
           break;
         default:
           break;
       }
+      setSort("");
       setIsLoading(false);
     };
     fetchAPI();
@@ -148,7 +162,9 @@ const FilterMovies = () => {
                   }}
                 >
                   <MenuItem value={"popularity"}>Popularity</MenuItem>
-                  <MenuItem value={"vote_average"}>Rating</MenuItem>
+                  {category !== "coming-soon" && (
+                    <MenuItem value={"vote_average"}>Rating</MenuItem>
+                  )}
                   <MenuItem value={"releaseDate"}>Release Date</MenuItem>
                 </Select>
               </FormControl>

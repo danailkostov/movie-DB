@@ -15,6 +15,8 @@ const trendingWeekUrl = `${mainUrl}/trending/all/week?${apiKey}&page=1`;
 const topRatedTVsUrl = `${mainUrl}/tv/top_rated?${apiKey}&language=en-US&page=1`;
 const todayDate = moment().format("YYYY-MM-DD");
 const monthAgoDate = moment().subtract(1, "months").format("YYYY-MM-DD");
+const monthAheadDate = moment().add(1, "months").format("YYYY-MM-DD");
+const topRatedPopularMovies = {};
 
 const fetchSearch = async (searchQuery, searchPage) => {
   const query = searchQuery;
@@ -102,6 +104,28 @@ const fetchPopularMovies = async (page, sort) => {
   }`;
   const response = await fetch(url);
   const moviesList = await response.json();
+  if (sort === "vote_average") {
+    let arr = [];
+    for (let pageNum = 1; pageNum <= 3; pageNum += 1) {
+      const url = `${mainUrl}/discover/movie?${apiKey}&language=en-US&sort_by=popularity.desc&page=${pageNum}`;
+      const response = await fetch(url);
+      const data = await response.json();
+      const movies = data.results;
+      movies.map((movie) => arr.push(movie));
+    }
+
+    arr.sort((a, b) => (a.vote_average < b.vote_average ? 1 : -1));
+    topRatedPopularMovies.pageOne = arr.slice(0, 20);
+    topRatedPopularMovies.pageTwo = arr.slice(20, 40);
+    topRatedPopularMovies.pageThree = arr.slice(40, 60);
+    if (page === 0) {
+      return topRatedPopularMovies.pageOne;
+    } else if (page === 1) {
+      return topRatedPopularMovies.pageTwo;
+    } else {
+      return topRatedPopularMovies.pageThree;
+    }
+  }
   return moviesList.results;
 };
 
@@ -135,18 +159,17 @@ const fetchTopRatedTVs = async () => {
   );
 };
 
-const fetchUpcoming = async (page) => {
-  const upcomingUrl = `${mainUrl}/movie/upcoming?${apiKey}&language=en-US&page=${page}`;
-  const response = await fetch(upcomingUrl);
+const fetchUpcoming = async (page, sort) => {
+  const sorting = sort === "popularity" ? "popularity.desc" : sort;
+  const url = `${mainUrl}/discover/movie?${apiKey}&language=en-US&region=US&sort_by=${sorting}&page=${page}&release_date.gte=${todayDate}&release_date.lte=${monthAheadDate}&with_release_type=2%7C3`;
+  const response = await fetch(url);
   const upcomingList = await response.json();
-  return upcomingList.results.sort((a, b) =>
-    a.popularity < b.popularity ? 1 : -1
-  );
+  return upcomingList.results;
 };
 
 const fetchUpcomingPages = async () => {
-  const topRatedMoviesUrl = `${mainUrl}/movie/upcoming?${apiKey}&language=en-US&page=1`;
-  const response = await fetch(topRatedMoviesUrl);
+  const url = `${mainUrl}/discover/movie?${apiKey}&language=en-US&region=US&page=1&release_date.gte=${todayDate}&release_date.lte=${monthAheadDate}&with_release_type=2%7C3`;
+  const response = await fetch(url);
   const moviesList = await response.json();
   return moviesList.total_pages;
 };
