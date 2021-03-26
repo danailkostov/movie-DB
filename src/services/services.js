@@ -1,4 +1,6 @@
 // const apiKey = `api_key=${process.env.REACT_APP_API_KEY}`;
+import moment from "moment";
+
 const apiKey = "api_key=626eebde47750fb57144ba7fcfb85a26";
 const mainUrl = "https://api.themoviedb.org/3";
 const searchUrl = `${mainUrl}/search/multi?${apiKey}&language=en-US&query=`;
@@ -11,6 +13,8 @@ const tvGenresUrl = `${mainUrl}/genre/tv/list?${apiKey}&language=en-US`;
 const trendingDayUrl = `${mainUrl}/trending/all/day?${apiKey}&page=1`;
 const trendingWeekUrl = `${mainUrl}/trending/all/week?${apiKey}&page=1`;
 const topRatedTVsUrl = `${mainUrl}/tv/top_rated?${apiKey}&language=en-US&page=1`;
+const todayDate = moment().format("YYYY-MM-DD");
+const monthAgoDate = moment().subtract(1, "months").format("YYYY-MM-DD");
 
 const fetchSearch = async (searchQuery, searchPage) => {
   const query = searchQuery;
@@ -21,17 +25,14 @@ const fetchSearch = async (searchQuery, searchPage) => {
 };
 
 const fetchNowPlayingMovies = async (page, sort) => {
-  const ratingsUrl = `${mainUrl}/discover/movie?${apiKey}&region=US&sort_by=vote_average.desc&page=${page}&release_date.gte=2021-02-10&release_date.lte=2021-03-30&with_release_type=%202%20%7C%203`;
-  const playingNowUrl = `${mainUrl}/movie/now_playing?${apiKey}&page=${page}&region=US`;
-  const response = await fetch(
-    sort === "top-rated" ? ratingsUrl : playingNowUrl
-  );
+  const url = `${mainUrl}/discover/movie?${apiKey}&language=en-US&region=US&sort_by=${sort}.desc&page=${page}&primary_release_date.gte=${monthAgoDate}&primary_release_date.lte=${todayDate}&with_release_type=2%7C3`;
+  const response = await fetch(url);
   const nowList = await response.json();
   return nowList.results;
 };
 
 const fetchNowPlayingMoviesPages = async () => {
-  const url = `${mainUrl}/movie/now_playing?${apiKey}&page=1&region=US`;
+  const url = `${mainUrl}/discover/movie?${apiKey}&language=en-US&region=US&page=1&primary_release_date.gte=${monthAgoDate}&primary_release_date.lte=${todayDate}&with_release_type=2%7C3`;
   const response = await fetch(url);
   const moviesList = await response.json();
   return moviesList.total_pages;
@@ -95,8 +96,10 @@ const fetchTrendingWeek = async () => {
   );
 };
 
-const fetchPopularMovies = async (page) => {
-  const url = `${mainUrl}/movie/popular?${apiKey}&page=${page + 1}`;
+const fetchPopularMovies = async (page, sort) => {
+  const url = `${mainUrl}/discover/movie?${apiKey}&language=en-US&sort_by=${sort}.desc&page=${
+    page + 1
+  }`;
   const response = await fetch(url);
   const moviesList = await response.json();
   return moviesList.results;
@@ -109,17 +112,17 @@ const fetchPopularMoviesPages = async () => {
   return moviesList.total_pages;
 };
 
-const fetchTopRatedMovies = async (page) => {
-  const topRatedMoviesUrl = `${mainUrl}/movie/top_rated?${apiKey}&language=en-US&page=${
+const fetchTopRatedMovies = async (page, sort) => {
+  const url = `${mainUrl}/discover/movie?${apiKey}&language=en-US&sort_by=${sort}.desc&page=${
     page + 1
-  }`;
-  const response = await fetch(topRatedMoviesUrl);
+  }&vote_count.gte=1000&vote_average.gte=8`;
+  const response = await fetch(url);
   const moviesList = await response.json();
   return moviesList.results;
 };
 const fetchTopRatedMoviesPages = async () => {
-  const topRatedMoviesUrl = `${mainUrl}/movie/top_rated?${apiKey}&language=en-US&page=1`;
-  const response = await fetch(topRatedMoviesUrl);
+  const url = `${mainUrl}/discover/movie?${apiKey}&language=en-US&page=1&vote_count.gte=1000&vote_average.gte=8`;
+  const response = await fetch(url);
   const moviesList = await response.json();
   return moviesList.total_pages;
 };

@@ -39,7 +39,7 @@ const AppProvider = ({ children }) => {
   useEffect(() => {
     const fetchAPI = async () => {
       setIsLoading(true);
-      setNowItems(await fetchNowPlayingMovies(searchPage));
+      setNowItems(await fetchNowPlayingMovies(searchPage, "popularity"));
       setGenres(await fetchGenres());
       setTvs(await fetchNowPlayingTV());
       setTvGenres(await fetchGenresTV());

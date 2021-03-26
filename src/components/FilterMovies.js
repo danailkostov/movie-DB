@@ -48,7 +48,7 @@ const FilterMovies = () => {
   const [pagesCount, setPagesCount] = useState(0);
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState(
-    category === "top-rated" ? "top-rated" : "popular"
+    category === "vote_average" ? "vote_average" : "popularity"
   );
   const [title, setTitle] = useState("");
   const [fetchType, setFetchType] = useState("");
@@ -60,21 +60,22 @@ const FilterMovies = () => {
   useEffect(() => {
     const fetchAPI = async () => {
       setIsLoading(true);
-      setSort(category === "top-rated" ? "top-rated" : "popular");
+      setSort(category === "vote_average" ? "vote_average" : "popularity");
       switch (category) {
         case "top-rated":
-          setMovies(await fetchTopRatedMovies(page - 1));
+          setMovies(await fetchTopRatedMovies(page - 1, fetchType ? fetchType : 'vote_average'));
           setPagesCount(await fetchTopRatedMoviesPages());
           setTitle("Top Rated Movies");
           break;
         case "popular":
-          setMovies(await fetchPopularMovies(page - 1));
-          setPagesCount(await fetchPopularMoviesPages());
+          setMovies(await fetchPopularMovies(page - 1, fetchType ? fetchType : 'popularity'));
+          // setPagesCount(await fetchPopularMoviesPages());
+          setPagesCount(3);
           setTitle("Popular Movies");
           break;
         case "now-playing":
           setMovies(
-            await fetchNowPlayingMovies(page, fetchType ? fetchType : "")
+            await fetchNowPlayingMovies(page, fetchType ? fetchType : "popularity")
           );
           setPagesCount(await fetchNowPlayingMoviesPages());
           setTitle("Now Playing Movies");
@@ -146,8 +147,8 @@ const FilterMovies = () => {
                     color: "white",
                   }}
                 >
-                  <MenuItem value={"popular"}>Popularity</MenuItem>
-                  <MenuItem value={"top-rated"}>Rating</MenuItem>
+                  <MenuItem value={"popularity"}>Popularity</MenuItem>
+                  <MenuItem value={"vote_average"}>Rating</MenuItem>
                   <MenuItem value={"releaseDate"}>Release Date</MenuItem>
                 </Select>
               </FormControl>
