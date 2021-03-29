@@ -40,14 +40,14 @@ const AppProvider = ({ children }) => {
       setIsLoading(true);
       setNowItems(await fetchNowPlayingMovies(searchPage, "popularity"));
       setGenres(await fetchGenres());
-      setTvs(await fetchNowPlayingTV());
+      setTvs(await fetchNowPlayingTV(searchPage, "popularity"));
       setTvGenres(await fetchGenresTV());
       setTrendingDayList(await fetchTrendingDay());
       setTrendingWeekList(await fetchTrendingWeek());
       setTopRatedMovies(
         await fetchTopRatedMovies(searchPage - 1, "vote_average")
       );
-      setTopRatedTVs(await fetchTopRatedTVs());
+      setTopRatedTVs(await fetchTopRatedTVs(searchPage - 1, "vote_average"));
       setUpcomingList(await fetchUpcoming(searchPage, "popularity.desc"));
       setIsLoading(false);
     };

@@ -76,9 +76,9 @@ const Menu = () => {
             inset
           />
         </ListItem>
-        <ListItem button>
+        {/* <ListItem button>
           <ListItemText primary="Browse Movies By Genre" inset />
-        </ListItem>
+        </ListItem> */}
         <ListItem button>
           <ListItemText
             primary={<Link to="/movies/now-playing">In Theaters</Link>}
@@ -102,17 +102,20 @@ const Menu = () => {
           />
         </ListItem>
         <ListItem button>
-          <ListItemText primary="On TV" inset />
+          <ListItemText
+            primary={<Link to="/tvs/top-rated">Top Rated Shows</Link>}
+            inset
+          />
         </ListItem>
         <ListItem button>
-          <ListItemText primary="Top Rated Shows" inset />
+          <ListItemText
+            primary={<Link to="/tvs/popular">Most Popular Shows</Link>}
+            inset
+          />
         </ListItem>
-        <ListItem button>
-          <ListItemText primary="Most Popular Shows" inset />
-        </ListItem>
-        <ListItem button>
+        {/* <ListItem button>
           <ListItemText primary="Browse TV Shows by Genre" inset />
-        </ListItem>
+        </ListItem> */}
       </List>
       <List>
         <ListItem button>
@@ -124,7 +127,10 @@ const Menu = () => {
           />
         </ListItem>
         <ListItem button>
-          <ListItemText primary="Most Popular Celebs" inset />
+          <ListItemText
+            primary={<Link to="/people/popular">Most Popular Celebs</Link>}
+            inset
+          />
         </ListItem>
       </List>
     </div>

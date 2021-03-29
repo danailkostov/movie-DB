@@ -7,16 +7,15 @@ const searchUrl = `${mainUrl}/search/multi?${apiKey}&language=en-US&query=`;
 const videosUrl = `${mainUrl}/movie/`;
 const youtubeUrl = "https://www.youtube.com/watch?v=";
 const genresUrl = `${mainUrl}/genre/movie/list?${apiKey}&language=en-US`;
-const tvUrl = `${mainUrl}/tv/popular?${apiKey}&language=en-US&page=1`;
 const tvVideosUrl = `${mainUrl}/tv/`;
 const tvGenresUrl = `${mainUrl}/genre/tv/list?${apiKey}&language=en-US`;
 const trendingDayUrl = `${mainUrl}/trending/all/day?${apiKey}&page=1`;
 const trendingWeekUrl = `${mainUrl}/trending/all/week?${apiKey}&page=1`;
-const topRatedTVsUrl = `${mainUrl}/tv/top_rated?${apiKey}&language=en-US&page=1`;
 const todayDate = moment().format("YYYY-MM-DD");
 const monthAgoDate = moment().subtract(1, "months").format("YYYY-MM-DD");
 const monthAheadDate = moment().add(1, "months").format("YYYY-MM-DD");
 const topRatedPopularMovies = {};
+const topRatedPopularTVs = {};
 
 const fetchSearch = async (searchQuery, searchPage) => {
   const query = searchQuery;
@@ -58,10 +57,42 @@ const fetchGenres = async () => {
   return genresList.genres;
 };
 
-const fetchNowPlayingTV = async () => {
-  const response = await fetch(tvUrl);
+const fetchNowPlayingTV = async (page, sort) => {
+  const url = `${mainUrl}/discover/tv?${apiKey}&language=en-US&sort_by=${sort}.desc&page=${
+    page + 1
+  }&vote_count.gte=1000`;
+  const response = await fetch(url);
   const tvList = await response.json();
-  return tvList.results.sort((a, b) => (a.popularity < b.popularity ? 1 : -1));
+  if (sort === "vote_average") {
+    let arr = [];
+    for (let pageNum = 1; pageNum <= 3; pageNum += 1) {
+      const url = `${mainUrl}/discover/tv?${apiKey}&language=en-US&sort_by=popularity.desc&page=${pageNum}`;
+      const response = await fetch(url);
+      const data = await response.json();
+      const tvs = data.results;
+      tvs.map((tv) => arr.push(tv));
+    }
+
+    arr.sort((a, b) => (a.vote_average < b.vote_average ? 1 : -1));
+    topRatedPopularTVs.pageOne = arr.slice(0, 20);
+    topRatedPopularTVs.pageTwo = arr.slice(20, 40);
+    topRatedPopularTVs.pageThree = arr.slice(40, 60);
+    if (page === 0) {
+      return topRatedPopularTVs.pageOne;
+    } else if (page === 1) {
+      return topRatedPopularTVs.pageTwo;
+    } else {
+      return topRatedPopularTVs.pageThree;
+    }
+  }
+  return tvList.results;
+};
+
+const fetchNowPlayingTVsPages = async () => {
+  const url = `${mainUrl}/tv/popular?${apiKey}&language=en-US&page=1`;
+  const response = await fetch(url);
+  const moviesList = await response.json();
+  return moviesList.total_pages;
 };
 
 const fetchVideoTV = async (id) => {
@@ -151,12 +182,20 @@ const fetchTopRatedMoviesPages = async () => {
   return moviesList.total_pages;
 };
 
-const fetchTopRatedTVs = async () => {
-  const response = await fetch(topRatedTVsUrl);
+const fetchTopRatedTVs = async (page, sort) => {
+  const url = `${mainUrl}/discover/tv?${apiKey}&language=en-US&sort_by=${sort}.desc&page=${
+    page + 1
+  }&vote_count.gte=1000`;
+  const response = await fetch(url);
   const tvsList = await response.json();
-  return tvsList.results.sort((a, b) =>
-    a.vote_average < b.vote_average ? 1 : -1
-  );
+  return tvsList.results;
+};
+
+const fetchTopRatedTVsPages = async () => {
+  const url = `${mainUrl}/discover/tv?${apiKey}&language=en-US&page=1&vote_count.gte=1000`;
+  const response = await fetch(url);
+  const tvList = await response.json();
+  return tvList.total_pages;
 };
 
 const fetchUpcoming = async (page, sort) => {
@@ -384,6 +423,13 @@ const fetchSortedMovies = async (sort) => {
   return movieList.results;
 };
 
+const fetchPopularPeople = async () => {
+  const url = `https://api.themoviedb.org/3/person/popular?api_key=626eebde47750fb57144ba7fcfb85a26&language=en-US&page=1`;
+  const response = await fetch(url);
+  const peopleList = await response.json();
+  return peopleList.results;
+};
+
 export {
   fetchSearch,
   fetchNowPlayingMovies,
@@ -419,4 +465,7 @@ export {
   fetchNowPlayingMoviesPages,
   fetchUpcomingPages,
   fetchSortedMovies,
+  fetchTopRatedTVsPages,
+  fetchNowPlayingTVsPages,
+  fetchPopularPeople,
 };

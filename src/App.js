@@ -12,6 +12,8 @@ import MovieStaff from "./components/MovieStaff";
 import AllRecommend from "./components/AllRecommend";
 import TvStaff from "./components/TvStaff";
 import FilterMovies from "./components/FilterMovies";
+import FilterTVs from "./components/FilterTVs";
+import PopularPeople from "./components/PopularPeople";
 
 function App() {
   return (
@@ -57,6 +59,12 @@ function App() {
           </Route>
           <Route path="/movies/:category">
             <FilterMovies />
+          </Route>
+          <Route path="/tvs/:category">
+            <FilterTVs />
+          </Route>
+          <Route path="/people/popular">
+            <PopularPeople />
           </Route>
         </Switch>
       </div>

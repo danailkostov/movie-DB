@@ -15,13 +15,9 @@ import {
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import React, { useEffect, useState } from "react";
 import {
-  fetchTopRatedMovies,
-  fetchTopRatedMoviesPages,
-  fetchPopularMovies,
-  fetchNowPlayingMovies,
-  fetchNowPlayingMoviesPages,
-  fetchUpcoming,
-  fetchUpcomingPages,
+  fetchTopRatedTVs,
+  fetchTopRatedTVsPages,
+  fetchNowPlayingTV,
 } from "../services/services";
 import Pagination from "@material-ui/lab/Pagination";
 import { makeStyles } from "@material-ui/core/styles";
@@ -39,7 +35,7 @@ const useStyles = makeStyles(() => ({
 
 const posterUrl = "https://image.tmdb.org/t/p/w185";
 
-const FilterMovies = () => {
+const FilterTVs = () => {
   const { category } = useParams();
   const classes = useStyles();
   const [isLoading, setIsLoading] = useState(true);
@@ -60,43 +56,23 @@ const FilterMovies = () => {
       switch (category) {
         case "top-rated":
           setMovies(
-            await fetchTopRatedMovies(
+            await fetchTopRatedTVs(
               page - 1,
               fetchType ? fetchType : "vote_average"
             )
           );
-          setPagesCount(await fetchTopRatedMoviesPages());
-          setTitle("Top Rated Movies");
+          setPagesCount(await fetchTopRatedTVsPages());
+          setTitle("Top Rated Shows");
           break;
         case "popular":
           setMovies(
-            await fetchPopularMovies(
+            await fetchNowPlayingTV(
               page - 1,
               fetchType ? fetchType : "popularity"
             )
           );
           setPagesCount(3);
           setTitle("Popular Movies");
-          break;
-        case "now-playing":
-          setMovies(
-            await fetchNowPlayingMovies(
-              page,
-              fetchType ? fetchType : "popularity"
-            )
-          );
-          setPagesCount(await fetchNowPlayingMoviesPages());
-          setTitle("Now Playing Movies");
-          break;
-        case "coming-soon":
-          setMovies(
-            await fetchUpcoming(
-              page,
-              fetchType ? fetchType : "release_date.asc"
-            )
-          );
-          setPagesCount(await fetchUpcomingPages());
-          setTitle("Upcoming Movies");
           break;
         default:
           break;
@@ -154,7 +130,6 @@ const FilterMovies = () => {
                   value={sort}
                   onChange={handleSort}
                   style={{
-                    // backgroundColor: "#1f2833",
                     backgroundColor: "white",
                     borderRadius: "5px",
                     paddingLeft: "15px",
@@ -164,9 +139,6 @@ const FilterMovies = () => {
                   <MenuItem value={"popularity"}>Popularity</MenuItem>
                   {category !== "coming-soon" && (
                     <MenuItem value={"vote_average"}>Rating</MenuItem>
-                  )}
-                  {category === "coming-soon" && (
-                    <MenuItem value={"releaseDate"}>Release Date</MenuItem>
                   )}
                 </Select>
               </FormControl>
@@ -209,9 +181,9 @@ const FilterMovies = () => {
           {movies.map((movie) => {
             const {
               poster_path,
-              title,
+              name,
               vote_average,
-              release_date,
+              first_air_date,
               id,
             } = movie;
             return (
@@ -224,7 +196,7 @@ const FilterMovies = () => {
                   }}
                   elevation={7}
                 >
-                  <Link to={`/movie/${id}`}>
+                  <Link to={`/tv/${id}`}>
                     <img
                       src={
                         poster_path ? `${posterUrl}${poster_path}` : noPoster
@@ -242,10 +214,10 @@ const FilterMovies = () => {
                     style={{ paddingLeft: "10px", paddingRight: "10px" }}
                   >
                     <Link
-                      to={`/movie/${id}`}
+                      to={`/tv/${id}`}
                       style={{ textDecoration: "none", color: "#45A29E" }}
                     >
-                      {title}
+                      {name}
                     </Link>
                   </Typography>
                   <Typography
@@ -258,7 +230,7 @@ const FilterMovies = () => {
                     }}
                   >
                     <Typography variant="body1">
-                      {moment(release_date, "YYYY-MM-DD").format(
+                      {moment(first_air_date, "YYYY-MM-DD").format(
                         "MMM Do[,] YYYY"
                       )}
                     </Typography>
@@ -289,4 +261,4 @@ const FilterMovies = () => {
   );
 };
 
-export default FilterMovies;
+export default FilterTVs;
