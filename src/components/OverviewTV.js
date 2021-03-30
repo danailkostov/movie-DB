@@ -61,7 +61,7 @@ const OverviewTV = ({ tvDetails, tvReviews, tvCert, tvVideo }) => {
   const allGenres = genres.map((item, index) =>
     index === genres.length - 1 ? (
       <Link
-        to={"/search/genres/" + item.name}
+        to={"/tvs/" + item.id}
         style={{ color: "#45A29E", textDecoration: "none" }}
       >
         {" "}
@@ -69,7 +69,7 @@ const OverviewTV = ({ tvDetails, tvReviews, tvCert, tvVideo }) => {
       </Link>
     ) : (
       <Link
-        to={"/search/genres/" + item.name}
+        to={"/tvs/" + item.id}
         style={{ color: "#45A29E", textDecoration: "none" }}
       >
         {" "}

@@ -76,7 +76,7 @@ const Overview = ({
   const allGenres = genres.map((item, index) =>
     index === genres.length - 1 ? (
       <Link
-        to={"/search/genres/" + item.name}
+        to={"/movies/" + item.id}
         style={{ color: "#45A29E", textDecoration: "none" }}
       >
         {" "}
@@ -84,7 +84,7 @@ const Overview = ({
       </Link>
     ) : (
       <Link
-        to={"/search/genres/" + item.name}
+        to={"/movies/" + item.id}
         style={{ color: "#45A29E", textDecoration: "none" }}
       >
         {" "}

@@ -92,7 +92,7 @@ const Carousel = () => {
   const [desc, setDesc] = useState(currentItems[0].overview);
   const [genresArray, setGenresArray] = useState(currentItems[0].genre_ids);
   const [movieTitle, setMovieTitle] = useState(nowItems[0].title);
-  const [tvTitle, setTvTitle] = useState(tvs[0].original_name);
+  const [tvTitle, setTvTitle] = useState(tvs[0].name);
 
   useEffect(() => {
     const fetchAPI = async () => {
@@ -133,7 +133,7 @@ const Carousel = () => {
       setDesc(currentItems[current].overview);
       setGenresArray(currentItems[current].genre_ids);
       setMovieTitle(nowItems[current].title);
-      setTvTitle(tvs[current].original_name);
+      setTvTitle(tvs[current].name);
     },
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
@@ -232,7 +232,8 @@ const Carousel = () => {
                 size="small"
               >
                 <Link
-                  to={"/search/genres/" + name}
+                  // to={"/search/genres/" + name}
+                  to={isMovies ? `/movies/${id}` : `/tvs/${id}`}
                   style={{ textDecoration: "none", color: "white" }}
                 >
                   {name}

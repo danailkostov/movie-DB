@@ -18,6 +18,8 @@ import {
   fetchTopRatedTVs,
   fetchTopRatedTVsPages,
   fetchNowPlayingTV,
+  fetchTVsByGenre,
+  fetchTVsByGenrePages,
 } from "../services/services";
 import Pagination from "@material-ui/lab/Pagination";
 import { makeStyles } from "@material-ui/core/styles";
@@ -75,6 +77,14 @@ const FilterTVs = () => {
           setTitle("Popular Movies");
           break;
         default:
+          setMovies(
+            await fetchTVsByGenre(
+              page,
+              fetchType ? fetchType : "popularity",
+              category
+            )
+          );
+          setPagesCount(await fetchTVsByGenrePages(category));
           break;
       }
       setSort("");

@@ -57,6 +57,7 @@ const fetchGenres = async () => {
   return genresList.genres;
 };
 
+
 const fetchNowPlayingTV = async (page, sort) => {
   const url = `${mainUrl}/discover/tv?${apiKey}&language=en-US&sort_by=${sort}.desc&page=${
     page + 1
@@ -424,10 +425,37 @@ const fetchSortedMovies = async (sort) => {
 };
 
 const fetchPopularPeople = async () => {
-  const url = `https://api.themoviedb.org/3/person/popular?api_key=626eebde47750fb57144ba7fcfb85a26&language=en-US&page=1`;
+  const url = `${mainUrl}/person/popular?${apiKey}&language=en-US&page=1`;
   const response = await fetch(url);
   const peopleList = await response.json();
   return peopleList.results;
+};
+
+const fetchMoviesByGenre = async (page, sort, genreID) => {
+  const url = `${mainUrl}/discover/movie?${apiKey}&language=en-US&sort_by=${sort}.desc&page=${page}&vote_count.gte=1000&with_genres=${genreID}`;
+  const response = await fetch(url);
+  const movies = await response.json();
+  return movies.results;
+};
+
+const fetchMoviesByGenrePages = async (genreID) => {
+  const url = `${mainUrl}/discover/movie?${apiKey}&language=en-US&sort_by=popularity.desc&page=1&vote_count.gte=1000&with_genres=${genreID}`;
+  const response = await fetch(url);
+  const movies = await response.json();
+  return movies.total_pages;
+};
+const fetchTVsByGenre = async (page, sort, genreID) => {
+  const url = `${mainUrl}/discover/tv?${apiKey}&language=en-US&sort_by=${sort}.desc&page=${page}&vote_count.gte=1000&with_genres=${genreID}`;
+  const response = await fetch(url);
+  const movies = await response.json();
+  return movies.results;
+};
+
+const fetchTVsByGenrePages = async (genreID) => {
+  const url = `${mainUrl}/discover/tv?${apiKey}&language=en-US&sort_by=popularity.desc&page=1&vote_count.gte=1000&with_genres=${genreID}`;
+  const response = await fetch(url);
+  const movies = await response.json();
+  return movies.total_pages;
 };
 
 export {
@@ -468,4 +496,8 @@ export {
   fetchTopRatedTVsPages,
   fetchNowPlayingTVsPages,
   fetchPopularPeople,
+  fetchMoviesByGenre,
+  fetchMoviesByGenrePages,
+  fetchTVsByGenre,
+  fetchTVsByGenrePages,
 };

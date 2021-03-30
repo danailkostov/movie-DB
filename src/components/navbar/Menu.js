@@ -66,13 +66,27 @@ const Menu = () => {
         </ListItem>
         <ListItem button>
           <ListItemText
-            primary={<Link to="/movies/top-rated">Top Rated Movies</Link>}
+            primary={
+              <Link
+                to="/movies/top-rated"
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                Top Rated Movies
+              </Link>
+            }
             inset
           />
         </ListItem>
         <ListItem button>
           <ListItemText
-            primary={<Link to="/movies/popular">Most Popular Movies</Link>}
+            primary={
+              <Link
+                to="/movies/popular"
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                Most Popular Movies
+              </Link>
+            }
             inset
           />
         </ListItem>
@@ -81,13 +95,27 @@ const Menu = () => {
         </ListItem> */}
         <ListItem button>
           <ListItemText
-            primary={<Link to="/movies/now-playing">In Theaters</Link>}
+            primary={
+              <Link
+                to="/movies/now-playing"
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                In Theaters
+              </Link>
+            }
             inset
           />
         </ListItem>
         <ListItem button>
           <ListItemText
-            primary={<Link to="/movies/coming-soon">Coming Soon</Link>}
+            primary={
+              <Link
+                to="/movies/coming-soon"
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                Coming Soon
+              </Link>
+            }
             inset
           />
         </ListItem>
@@ -103,13 +131,27 @@ const Menu = () => {
         </ListItem>
         <ListItem button>
           <ListItemText
-            primary={<Link to="/tvs/top-rated">Top Rated Shows</Link>}
+            primary={
+              <Link
+                to="/tvs/top-rated"
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                Top Rated Shows
+              </Link>
+            }
             inset
           />
         </ListItem>
         <ListItem button>
           <ListItemText
-            primary={<Link to="/tvs/popular">Most Popular Shows</Link>}
+            primary={
+              <Link
+                to="/tvs/popular"
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                Most Popular Shows
+              </Link>
+            }
             inset
           />
         </ListItem>
@@ -128,7 +170,14 @@ const Menu = () => {
         </ListItem>
         <ListItem button>
           <ListItemText
-            primary={<Link to="/people/popular">Most Popular Celebs</Link>}
+            primary={
+              <Link
+                to="/people/popular"
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                Most Popular Celebs
+              </Link>
+            }
             inset
           />
         </ListItem>

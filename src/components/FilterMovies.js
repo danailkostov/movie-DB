@@ -22,6 +22,8 @@ import {
   fetchNowPlayingMoviesPages,
   fetchUpcoming,
   fetchUpcomingPages,
+  fetchMoviesByGenre,
+  fetchMoviesByGenrePages,
 } from "../services/services";
 import Pagination from "@material-ui/lab/Pagination";
 import { makeStyles } from "@material-ui/core/styles";
@@ -99,6 +101,14 @@ const FilterMovies = () => {
           setTitle("Upcoming Movies");
           break;
         default:
+          setMovies(
+            await fetchMoviesByGenre(
+              page,
+              fetchType ? fetchType : "popularity",
+              category
+            )
+          );
+          setPagesCount(await fetchMoviesByGenrePages(category));
           break;
       }
       setSort("");
