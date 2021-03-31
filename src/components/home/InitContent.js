@@ -1,8 +1,8 @@
 import React from "react";
 import { Container } from "@material-ui/core";
-import NowPlaying from "../now/NowPlaying";
-import Trending from "../trending/Trending";
-import Upcoming from "../upcoming/Upcoming";
+import NowPlaying from "../NowPlaying";
+import Trending from "../Trendings";
+import Upcoming from "../Upcoming";
 
 const InitContent = () => {
   return (

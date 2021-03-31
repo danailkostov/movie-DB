@@ -1,19 +1,16 @@
 import Header from "./components/header/Header";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./components/home/Home";
-import SingleMovie from "./components/SingleMovie";
-import SingleTV from "./components/SingleTV";
-import SinglePerson from "./components/SinglePerson";
-import AllResults from "./components/AllResults";
-import GenresQuery from "./components/GenresQuery";
-import Reviews from "./components/Reviews";
-import SingleReview from "./components/SingleReview";
-import MovieStaff from "./components/MovieStaff";
-import AllRecommend from "./components/AllRecommend";
-import TvStaff from "./components/TvStaff";
-import FilterMovies from "./components/FilterMovies";
-import FilterTVs from "./components/FilterTVs";
-import PopularPeople from "./components/PopularPeople";
+import SingleMovie from "./components/Movie";
+import SingleTV from "./components/TV";
+import SinglePerson from "./components/Person";
+import Reviews from './components/Reviews/'
+import SingleReview from "./components/Reviews/SingleReview/index";
+import MovieStaff from "./components/Movie/Staff";
+import TvStaff from "./components/TV/Staff";
+import FilterMovies from "./components/FilterMovies/index";
+import FilterTVs from "./components/FilterTV/index";
+import PopularPeople from "./components/PopularPeople/index";
 
 function App() {
   return (
@@ -45,17 +42,8 @@ function App() {
           <Route path="/person/:id">
             <SinglePerson />
           </Route>
-          <Route path="/allresults">
-            <AllResults />
-          </Route>
-          <Route path="/search/genres/:type">
-            <GenresQuery />
-          </Route>
           <Route path="/review/:id">
             <SingleReview />
-          </Route>
-          <Route path="/recommendations">
-            <AllRecommend />
           </Route>
           <Route path="/movies/:category">
             <FilterMovies />

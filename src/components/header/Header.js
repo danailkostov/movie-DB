@@ -1,12 +1,9 @@
-import { Container } from "@material-ui/core";
 import React from "react";
-import Navbar from "../navbar/Navbar";
+import Navbar from "../Nav";
 
 const Header = () => {
   return (
-    // <Container component="header">
       <Navbar />
-    // </Container>
   );
 };
 
